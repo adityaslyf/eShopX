@@ -11,22 +11,8 @@ import { RiCoupon2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  // const [showModel, setShowModel] = useState<boolean>(false);
-
-  // const [phoneActive, setPhoneActive] = useState<boolean>(
-  //   window.innerWidth < 1024
-  // );
-
-  // const resizeHandler = () => {
-  //   if (window.innerWidth < 1024) {
-  //     setPhoneActive(true);
-  //   } else {
-  //     setPhoneActive(false);
-  //   }
-  // }
-
   return (
-    <div className="flex flex-col shadow-2xl w-[22rem] h-[100vh] space-y-6 font-serif">
+    <div className="flex flex-col shadow-2xl  w-fit pr-14 h-screen space-y-6 font-serif">
       <div className="m-4">
         <FaCartPlus className="size-11" />
       </div>
