@@ -5,11 +5,12 @@ import {
   HiMiniArrowTrendingDown,
   HiOutlineArrowTrendingUp,
 } from "react-icons/hi2";
-
+import data from '../assets/data.json'
+import { BarChart } from "../components/Charts";
 const Dashboard = () => {
   return (
-    <div className="dashboard bg-gray-100 h-screen w-full font-serif overflow-y-auto">
-      <div className="navbar flex items-center justify-between shadow-xl h-16">
+    <div className="dashboard bg-gray-100  h-screen w-full font-serif overflow-y-auto">
+      <div className="navbar flex items-center justify-between shadow-xl h-16 p-2 m-2">
         <div className="left_bar flex items-center m-5 gap-3">
           <CiSearch />
           <input
@@ -55,23 +56,39 @@ const Dashboard = () => {
         />
       </div>
 
-      <section>
-        <section className=" graph-container  flex gap-4 justify-evenly">
-          <div className="revenue-chart bg-slate-200 h-auto shadow-lg">
-            <span className=" flex justify-center">REVENUE & TRANSACTION</span>
+      <section className="p-4">
+        <div className="graph-container flex flex-col lg:flex-row gap-4 justify-evenly">
+          <div className="revenue-chart bg-slate-400 h-auto shadow-lg w-full lg:w-5/6 p-4">
+            <span className="flex justify-center text-white text-lg md:text-xl p-6">
+              REVENUE & TRANSACTION
+            </span>
             {/* Graph here */}
+            <BarChart
+              data_1={[4200 ,2367,2762,6222]}
+              data_2={[4578 ,6568,6744,3344,3346]}
+              title_1="Revenue"
+              title_2="Transaction"
+              bgColor_1="green"
+              bgColor_2="blue"
+             />
           </div>
 
-          <div className="dashboard-inventory bg-slate-200 flex flex-col justify-center w-[340px] h-[640px] space-y-5 shadow-lg">
-            <span className=" text-center text-2xl font-light">INVENTORY</span>
-            <div className="categories overflow-auto flex flex-col ">
-            <CategoriesItem heading="Laptop" value={40} color="green" />
-              <CategoriesItem heading="Phone" value={70} color="blue" />
-              <CategoriesItem heading="Tablet" value={50} color="red" />
-              <CategoriesItem heading="Monitor" value={30} color="purple" />
+          <div className="dashboard-inventory bg-slate-600 flex flex-col justify-center w-full lg:w-1/4 h-auto lg:h-[640px] space-y-5 shadow-lg p-4">
+            <span className="text-center text-white text-xl md:text-2xl font-light">
+              INVENTORY
+            </span>
+            <div className="categories overflow-auto flex flex-col space-y-2">
+              {data.categories.map((i) => (
+                <CategoriesItem
+                  key={i.heading}
+                  heading={i.heading}
+                  value={i.value}
+                  color="green"
+                />
+              ))}
             </div>
           </div>
-        </section>
+        </div>
       </section>
     </div>
   );
