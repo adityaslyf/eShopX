@@ -5,8 +5,10 @@ import {
   HiMiniArrowTrendingDown,
   HiOutlineArrowTrendingUp,
 } from "react-icons/hi2";
-import data from '../assets/data.json'
-import { BarChart } from "../components/Charts";
+import data from "../assets/data.json";
+import { BarChart, DoughnutChart } from "../components/Charts";
+import { BiMaleFemale } from "react-icons/bi";
+// import { PieChart } from "../components/Charts";
 const Dashboard = () => {
   return (
     <div className="dashboard bg-gray-100  h-screen w-full font-serif overflow-y-auto">
@@ -64,13 +66,13 @@ const Dashboard = () => {
             </span>
             {/* Graph here */}
             <BarChart
-              data_1={[4200 ,2367,2762,6222]}
-              data_2={[4578 ,6568,6744,3344,3346]}
+              data_1={[4200, 2367, 2762, 6222]}
+              data_2={[4578, 6568, 6744, 3344, 3346]}
               title_1="Revenue"
               title_2="Transaction"
               bgColor_1="green"
               bgColor_2="blue"
-             />
+            />
           </div>
 
           <div className="dashboard-inventory bg-slate-600 flex flex-col justify-center w-full lg:w-1/4 h-auto lg:h-[640px] space-y-5 shadow-lg p-4">
@@ -90,6 +92,31 @@ const Dashboard = () => {
           </div>
         </div>
       </section>
+
+      <section className="transaction_container">
+  <div className="chart_table flex flex-col md:flex-row justify-between m-6">
+    <div className="chart relative w-full max-w-[25rem] shadow-xl h-96 bg-white rounded-lg">
+      <h1 className="text-center text-2xl from-neutral-400">
+        GENDER RATIO
+      </h1>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <BiMaleFemale size={32} className=" absolute top-32"   />
+        <div className=" w-72 h-72">
+        <DoughnutChart
+          data={[40, 60]}
+          labels={["Female", "Male"]}
+          backgroundColor={["Pink", "#36A2EB"]}
+          cutout={90}
+        />
+        </div>
+       
+      </div>
+    </div>
+    <div className="transaction_table w-full mt-6 md:mt-0">
+      <h1>TOP TRANSACTION</h1>
+    </div>
+  </div>
+</section>
     </div>
   );
 };
