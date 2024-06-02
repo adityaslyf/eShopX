@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="bg-gradient-to-r from-indigo-400 from-10% via-sky-500 via-30% to-emerald-400 to-90% flex flex-col shadow-2xl  w-fit pr-14 h-screen space-y-6 font-serif">
+    <div className=" bg-white flex flex-col shadow-2xl  w-fit pr-14 h-screen space-y-6 font-serif">
       <div className="m-4">
         <FaCartPlus className="size-11" />
       </div>
