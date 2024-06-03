@@ -100,7 +100,10 @@ const Dashboard = () => {
               GENDER RATIO
             </h1>
             <div className="absolute inset-0 flex items-center justify-center m-4">
-              <BiMaleFemale size={32} className=" absolute top-32 text-gray-700" />
+              <BiMaleFemale
+                size={32}
+                className=" absolute top-32 text-gray-700"
+              />
               <div className=" w-72 h-72 mt-6 ">
                 <DoughnutChart
                   data={[40, 60]}

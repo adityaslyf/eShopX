@@ -11,23 +11,23 @@ function Table<T extends Object>(
       columns,
       data,
     };
-    const { getTableProps, getTableBodyProps, rows, headerGroups, prepareRow } =
-      useTable(options);
+    const { getTableProps, getTableBodyProps, rows, headerGroups, prepareRow } = useTable(options);
 
     return (
       <div className={containerClassNames}>
-        <h2 className="heading text-3xl font-bold mb-4">{heading}</h2>
+        <h2 className="text-3xl font-bold mb-4">{heading}</h2>
         <table
-          className="table-auto border-collapse border border-gray-300 w-full "
-          {...getTableProps}
+          className="table border-collapse border border-gray-300 w-full"
+          {...getTableProps()}
         >
-          <thead className=" bg-gray-200">
-            {headerGroups.map((headerGroups) => (
-              <tr {...headerGroups.getHeaderGroupProps()}>
-                {headerGroups.headers.map((column) => (
+          <thead className="bg-gray-200">
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                {headerGroup.headers.map((column) => (
                   <th
-                    className=" px-2 py-2 border border-gray-300 text-left"
+                    className="px-2 py-2 border border-gray-300 text-left"
                     {...column.getHeaderProps()}
+                    key={column.id}
                   >
                     {column.render("Header")}
                   </th>
@@ -39,11 +39,12 @@ function Table<T extends Object>(
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr className=" hover:bg-gray-100" {...row.getRowProps()}>
+                <tr className="hover:bg-gray-100" {...row.getRowProps()} key={row.id}>
                   {row.cells.map((cell) => (
                     <td
-                      className=" px-2 py-5 border border-gray-300 text-left"
+                      className="px-2 py-5 border border-gray-300 text-left"
                       {...cell.getCellProps()}
+                      key={cell.column.id}
                     >
                       {cell.render("Cell")}
                     </td>
@@ -57,4 +58,5 @@ function Table<T extends Object>(
     );
   };
 }
+
 export default Table;
