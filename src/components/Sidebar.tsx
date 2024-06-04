@@ -34,7 +34,7 @@ const Sidebar = () => {
           <div className="flex flex-col">
             <div className="font-light text-xl">DASHBOARD</div>
             <div className="flex flex-col text-lg p-4 space-y-4">
-              <Link to="/admin/dashboard">
+              <Link to="/">
                 <div className="flex gap-3 items-center">
                   <MdDashboard />
                   <div>Dashboard</div>
