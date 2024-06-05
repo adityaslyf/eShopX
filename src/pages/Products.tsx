@@ -48,7 +48,7 @@ const arr: DataType[] = [
     price: 690,
     stock: 3,
     action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
+      <Link to="/admin/products/:id" className="text-blue-500 underline">
         Manage
       </Link>
     ),
@@ -227,7 +227,7 @@ const Products = () => {
           {table()}
         </div>
       </main>
-      <Link to="/admin/product/new">
+      <Link to="/admin/products/new">
         <FaPlus color="white" size={35} className="  bg-green-500 rounded-full m-6 border b" />
       </Link>
     </div>  
