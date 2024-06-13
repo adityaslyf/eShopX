@@ -3,7 +3,11 @@ import userRouter from "./routes/user.js";
 const app = express();
 const port = 4000;
 
-app.get("/api/v1", userRouter);
+app.get("/api/v1/user", userRouter);
+
+app.get("/", (req, res) => {
+  res.send("Api is running");
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
