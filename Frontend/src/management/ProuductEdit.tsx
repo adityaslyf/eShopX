@@ -44,18 +44,19 @@ const NewProduct: React.FC = () => {
       <Sidebar />
 
       <div className="flex justify-center flex-grow p-4 bg-gray-100 h-[800px] gap-6">
-        <section className="bg-white p-4 rounded-lg shadow-md max-w-sm">
-          <strong>SAMPLE ID</strong>
-          {selectedImage && (
-            <img src={selectedImage as string} alt="Selected" className="mt-4 w-36 h-36 text-center rounded-full object-cover" />
-          )}
-          <p>{formState.name}</p>
-          {formState.stock > 0 ? (
-            <span className="text-green-500">Available</span>
-          ) : (
-            <span className="text-red-500">Out of Stock</span>
-          )}
-        </section>
+          <section className="bg-white   p-4 rounded-lg shadow-md  w-[550px]">
+            <strong>SAMPLE ID</strong>
+            {selectedImage && (
+              <img src={selectedImage as string} alt="Selected" className="mt-4 w-36 h-36 text-center rounded-full object-cover" />
+            )}
+            <p>{formState.name}</p>
+            <p>{formState.price}</p>
+            {formState.stock > 0 ? (
+              <span className="text-green-500">Available</span>
+            ) : (
+              <span className="text-red-500">Out of Stock</span>
+            )}
+          </section>
 
         <form
           onSubmit={handleSubmit}
