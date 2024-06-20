@@ -1,5 +1,6 @@
 import express from 'express';
 import { newUser , getAllUsers , getUser, deleteUser } from '../controllers/user.js';
+import { isAdmin } from '../middleware/auth.js';
 
 const app = express.Router();
 
@@ -7,10 +8,11 @@ const app = express.Router();
 app.post('/new' , newUser)
 
 // route - /api/v1/user/all
-app.get("/all" , getAllUsers)
+app.get("/all" , isAdmin , getAllUsers)
 
 //route - api/v1/user/dynamic id
-app.get("/:id" , getUser)
-app.delete("/:id" , deleteUser)
+// app.get("/:id" , getUser)
+// app.delete("/:id" , deleteUser)
+app.route("/:id").get(getUser).delete(deleteUser) // this is the same as the above two lines
 
 export default app;

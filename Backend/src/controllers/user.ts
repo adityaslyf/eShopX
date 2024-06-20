@@ -45,7 +45,7 @@ export const newUser = TryCatch(
         message: `User created successfully, ${user.name}`,
       });
     } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
+      return next(error);
     }
   }
 );
