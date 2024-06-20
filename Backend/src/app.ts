@@ -3,6 +3,7 @@ import userRouter from "./routes/user.js";
 import { connectDB } from "./utils/feautures.js";
 import bodyParser from "body-parser";
 import { errorMiddleware } from "./middleware/error.js";
+
 const app = express();
 const port = 4000;
 

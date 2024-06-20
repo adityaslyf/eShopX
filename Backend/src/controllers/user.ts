@@ -10,16 +10,25 @@ export const newUser = TryCatch(
     res: Response,
     next: NextFunction
   ) => {
-    throw new Error("Test error");
+    // throw new Error("Test error");
     const { name, email, photo, gender, role, _id, dob } = req.body;
 
-    // Basic validation
-    if (!name || !email || !role || !_id || !dob) {
-      return next(new ErrorHandler("Missing required fields", 400));
-    }
+    // // Basic validation
+
+    let user = await User.findById(_id);
 
     // Optionally, add more detailed validation (e.g., using Joi)
 
+    if (user) {
+      return res.status(200).json({
+        success: true,
+        message: `Welcome , ${user.name}`,
+      });
+    }
+
+    if (!name || !email || !role || !_id || !dob) {
+      return next(new ErrorHandler("Missing required fields", 400));
+    }
     try {
       const user = await User.create({
         name,
@@ -37,6 +46,48 @@ export const newUser = TryCatch(
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
+export const getAllUsers = TryCatch(
+  //although we dont need to specify the type of req, res, next,  cz of the TryCatch function has controllerType in which we have specified the type of req, res, next
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const users = await User.find();
+      res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+export const getUser = TryCatch(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+      }
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+export const deleteUser = TryCatch(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = await User.findByIdAndDelete(req.params.id);
+      if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+      }
+      res.status(200).json({
+        message: "User deleted successfully",
+      });
+    } catch (error) {
+      next(error);
     }
   }
 );
