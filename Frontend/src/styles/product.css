@@ -1,0 +1,9 @@
+/* .Product-conatainer{
+   background-color: blue;
+   margin-left: 50%;
+} */
+
+.products{
+    background-color: red;
+    max-width: 100%;
+}
