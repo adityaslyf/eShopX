@@ -13,6 +13,7 @@ connectDB();
 app.use(bodyParser.json());
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", productRoute);
+app.use("/uploads" , express.static("uploads"))
  
 app.get("/", (req, res) => {
   res.send("Api is running");

@@ -11,9 +11,7 @@ export const newUser = TryCatch(
     next: NextFunction
   ) => {
     // throw new Error("Test error");
-    const { name, email, photo, gender, role, _id, dob } = req.body;
-
-    // // Basic validation
+    const { name, email, photo, gender, role, _id, dob } = req.body;  
 
     let user = await User.findById(_id);
 

@@ -15,4 +15,4 @@ app.get("/all" , isAdmin , getAllUsers)
 // app.delete("/:id" , deleteUser)
 app.route("/:id").get(getUser).delete(deleteUser) // this is the same as the above two lines
 
-export default app;
+export default app; 
