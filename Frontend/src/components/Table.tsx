@@ -114,7 +114,7 @@ function Table<T extends Object>(
               onClick={() => {
                 gotoPage(0);
               }}
-              className="rounded-sm bg-slate-600 p-2  m-3"
+              className="rounded-sm bg-slate-400 p-2  m-3"
             >
               1st page
             </button>
