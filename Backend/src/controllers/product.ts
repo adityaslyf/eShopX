@@ -8,7 +8,9 @@ import {
 } from "../types/types.js";
 import { Product } from "../models/product.js";
 import { unlinkSync, existsSync } from "fs"; // Import for file deletion
+import { faker } from "@faker-js/faker";
 
+//Create a new product
 export const newProduct = TryCatch(
   async (req: Request<{}, {}, NewProductRequestBody>, res, next) => {
     const { name, price, stock, category } = req.body;
@@ -57,6 +59,8 @@ export const newProduct = TryCatch(
   }
 );
 
+
+//Get latest products
 export const getLatestProducts = TryCatch(async (req, res, next) => {
   const products = await Product.find({}).sort({ createdAt: -1 }).limit(5);
 
@@ -66,6 +70,8 @@ export const getLatestProducts = TryCatch(async (req, res, next) => {
   });
 });
 
+
+//Get product categories
 export const getCategories = TryCatch(async (req, res, next) => {
   const categories = await Product.distinct("category");
 
@@ -75,6 +81,8 @@ export const getCategories = TryCatch(async (req, res, next) => {
   });
 });
 
+
+//Admin can get all products
 export const getAdminProducts = TryCatch(async (req, res, next) => {
   const products = await Product.find({});
   return res.status(201).json({
@@ -83,6 +91,8 @@ export const getAdminProducts = TryCatch(async (req, res, next) => {
   });
 });
 
+
+//Getting a single product
 export const getSingleProduct = TryCatch(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   return res.status(201).json({
@@ -91,6 +101,8 @@ export const getSingleProduct = TryCatch(async (req, res, next) => {
   });
 });
 
+
+//Update a product
 export const updateProduct = TryCatch(
   async (
     req: Request<{ id: string }, {}, NewProductRequestBody>,
@@ -130,6 +142,31 @@ export const updateProduct = TryCatch(
   }
 );
 
+
+//Delete a product
+export const deleteProduct = TryCatch(async (req:Request<{id : string}>, res, next) => {
+const product = await Product.findById(req.params.id);
+if(!product) return next(new Error("Product not found"));
+
+if(product.photo && existsSync(product.photo)){
+  try{
+    unlinkSync(product.photo);
+  }catch(error){
+    console.error("Error deleting photo:", error);
+  }
+}
+
+await product.deleteOne();
+
+return res.status(200).json({
+  success: true,
+  message: "Product deleted successfully",
+});
+
+
+})
+
+//Get all products for search
 export const getAllProducts = TryCatch(
   async (req: Request<{}, {}, {}, SearchRequestQuery>, res, next) => {
     const { search, price, category, sort, page, productName } = req.query;
@@ -204,3 +241,4 @@ export const getAllProducts = TryCatch(
     }
   }
 );
+

@@ -1,7 +1,7 @@
 import express from "express";
 
 import { isAdmin } from "../middleware/auth.js";
-import { getAllProducts, getSingleProduct, updateProduct } from "../controllers/product.js";
+import { getAllProducts, getSingleProduct, updateProduct , deleteProduct } from "../controllers/product.js";
 import {
   newProduct,
   getLatestProducts,
@@ -18,7 +18,7 @@ app.get("/latest", getLatestProducts);
 app.get("/categories", getCategories);
 app.get("/admin-products", getAdminProducts);
 
-app.route("/:id").get(getSingleProduct).put( singleUpload , updateProduct);
+app.route("/:id").get(getSingleProduct).put( singleUpload , updateProduct).delete(deleteProduct);
 
 
 export default app;
