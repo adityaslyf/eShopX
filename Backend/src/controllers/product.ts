@@ -9,6 +9,7 @@ import {
 import { Product } from "../models/product.js";
 import { unlinkSync, existsSync } from "fs"; // Import for file deletion
 import { faker } from "@faker-js/faker";
+import { MyCache } from "../app.js";
 
 //Create a new product
 export const newProduct = TryCatch(
@@ -59,48 +60,101 @@ export const newProduct = TryCatch(
   }
 );
 
-
-//Get latest products
+//Revalidate on new product creation , update and deletion and on new  order creation
+// Middleware to get latest products with caching
 export const getLatestProducts = TryCatch(async (req, res, next) => {
-  const products = await Product.find({}).sort({ createdAt: -1 }).limit(5);
+  try {
+    // Check if the data is already in cache
+    const cachedProducts = MyCache.get("latestProducts");
+    if (cachedProducts) {
+      return res.status(200).json({
+        success: true,
+        products: cachedProducts,
+      });
+    }
 
-  return res.status(201).json({
-    success: true,
-    products,
-  });
+    // If not in cache, fetch from database
+    const products = await Product.find({}).sort({ createdAt: -1 }).limit(5);
+
+    // Store the fetched data in cache
+    MyCache.set("latestProducts", products);
+
+    return res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
-
+//Revalidate on new product creation , update and deletion and on new  order creation
 //Get product categories
 export const getCategories = TryCatch(async (req, res, next) => {
-  const categories = await Product.distinct("category");
+  try {
+    const cachedCategories = MyCache.get("categories");
+    if (cachedCategories) {
+      return res.status(200).json({
+        success: true,
+        categories: cachedCategories,
+      });
+    }
 
-  return res.status(201).json({
-    success: true,
-    categories,
-  });
+    const categories = await Product.distinct("category");
+    MyCache.set("category", categories);
+
+    return res.status(201).json({
+      success: true,
+      categories,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
-
 
 //Admin can get all products
 export const getAdminProducts = TryCatch(async (req, res, next) => {
-  const products = await Product.find({});
-  return res.status(201).json({
-    success: true,
-    products,
-  });
-});
+  try {
+    const cachedProducts = MyCache.get("adminProducts");
 
+    if (cachedProducts) {
+      return res.status(200).json({
+        success: true,
+        products: cachedProducts,
+      });
+    }
+    const products = await Product.find({});
+    return res.status(201).json({
+      success: true,
+      products,
+    });
+    MyCache.set("adminProducts", products);
+  } catch (error) {
+    next(error);
+  }
+});
 
 //Getting a single product
 export const getSingleProduct = TryCatch(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
-  return res.status(201).json({
-    success: true,
-    product,
-  });
-});
+  try {
+    const cachedProduct = MyCache.get(req.params.id);
+    if (cachedProduct) {
+      return res.status(200).json({
+        success: true,
+        product: cachedProduct,
+      });
+    }
+    const product = await Product.findById(req.params.id);
+    return res.status(201).json({
+      success: true,
+      product,
+    });
 
+    MyCache.set(req.params.id, product);
+  } catch (error) {
+    next(error);
+  }
+});
 
 //Update a product
 export const updateProduct = TryCatch(
@@ -142,29 +196,28 @@ export const updateProduct = TryCatch(
   }
 );
 
-
 //Delete a product
-export const deleteProduct = TryCatch(async (req:Request<{id : string}>, res, next) => {
-const product = await Product.findById(req.params.id);
-if(!product) return next(new Error("Product not found"));
+export const deleteProduct = TryCatch(
+  async (req: Request<{ id: string }>, res, next) => {
+    const product = await Product.findById(req.params.id);
+    if (!product) return next(new Error("Product not found"));
 
-if(product.photo && existsSync(product.photo)){
-  try{
-    unlinkSync(product.photo);
-  }catch(error){
-    console.error("Error deleting photo:", error);
+    if (product.photo && existsSync(product.photo)) {
+      try {
+        unlinkSync(product.photo);
+      } catch (error) {
+        console.error("Error deleting photo:", error);
+      }
+    }
+
+    await product.deleteOne();
+
+    return res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
+    });
   }
-}
-
-await product.deleteOne();
-
-return res.status(200).json({
-  success: true,
-  message: "Product deleted successfully",
-});
-
-
-})
+);
 
 //Get all products for search
 export const getAllProducts = TryCatch(
@@ -241,4 +294,3 @@ export const getAllProducts = TryCatch(
     }
   }
 );
-
