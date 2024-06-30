@@ -1,16 +1,23 @@
-
-import { TryCatch } from "../middleware/error.js"
-
+import { TryCatch } from "../middleware/error.js";
 
 export const newOrder = TryCatch(async (req, res, next) => {
-    try {
-        
-        const order = 
-        res.status(200).json({
-        success: true,
-        order,
-        });
-    } catch (error) {
-        next(error);
-    }
-    });
+  const {
+    orderItems,
+    shippingInfo,
+    user,
+    discount,
+    tax,
+    total,
+    shippingCharges,
+  } = req.body;
+
+   const order =  await Order.create({
+    orderItems,
+    shippingInfo,
+    user,
+    discount,
+    tax,
+    total,
+    shippingCharges,
+  });
+});

@@ -10,7 +10,6 @@ export interface NewUserRequestBody {
   dob: Date;
   createdAt: Date;
   updatedAt: Date;
-  //virtual schema
   age: number;
 }
 
@@ -58,3 +57,30 @@ export interface BaseQuery {
 export type SortOptions = {
   [key: string]: 1 | -1; // Dynamically define keys as string and values as 1 or -1
 };
+
+export type OrderItemType = {
+  name: string;
+  photo: string;
+  price: number;
+  quantity: number;
+  productId: string;
+};
+
+export type ShippingInfoType = {
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  pinCode: number;
+};
+
+export interface NewOrderRequestBody {
+  shippingInfo: ShippingInfoType;
+  user: string;
+  subtotal: number;
+  tax: number;
+  shippingCharges: number;
+  discount: number;
+  total: number;
+  orderItems: OrderItemType[];
+}
