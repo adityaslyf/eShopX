@@ -1,4 +1,7 @@
 import { TryCatch } from "../middleware/error.js";
+import { Order } from "../models/order.js";
+import { invalidateCache } from "../utils/cacheUtil.js";
+import { reduceStock } from "../utils/features.js";
 
 export const newOrder = TryCatch(async (req, res, next) => {
   const {
@@ -20,4 +23,8 @@ export const newOrder = TryCatch(async (req, res, next) => {
     total,
     shippingCharges,
   });
+
+  reduceStock(orderItems);
+  invalidateCache("orders");
 });
+

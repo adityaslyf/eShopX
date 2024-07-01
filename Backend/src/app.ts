@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import userRouter from "./routes/user.js";
-import { connectDB } from "./utils/feautures.js";
+import { connectDB } from "./utils/features.js";
 import bodyParser from "body-parser";
 import { errorMiddleware } from "./middleware/error.js";
 import productRoute from "./routes/products.js";
@@ -33,10 +33,12 @@ app.use("/uploads", express.static("uploads"));
 // Use body-parser middleware
 app.use(bodyParser.json());
 app.use(morgon("dev"));
+
 // Use routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", productRoute);
 app.use("/api/v1/order", orderRoute);
+
 // Health check route
 app.get("/", (req, res) => {
   res.send("API is running");

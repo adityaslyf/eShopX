@@ -58,6 +58,14 @@ export type SortOptions = {
   [key: string]: 1 | -1; // Dynamically define keys as string and values as 1 or -1
 };
 
+export type invalidateCacheProps = {
+  product?: boolean;
+  order?: boolean;
+  admin?: boolean;
+
+}
+
+
 export type OrderItemType = {
   name: string;
   photo: string;

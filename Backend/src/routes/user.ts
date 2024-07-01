@@ -11,8 +11,6 @@ app.post('/new' , newUser)
 app.get("/all" , isAdmin , getAllUsers)
 
 //route - api/v1/user/dynamic id
-// app.get("/:id" , getUser)
-// app.delete("/:id" , deleteUser)
 app.route("/:id").get(getUser).delete(deleteUser) // this is the same as the above two lines
 
 export default app; 
