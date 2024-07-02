@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { MdDashboard, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { AiFillCustomerService } from "react-icons/ai";
-import { FaChartBar, FaChartPie, FaChartLine, FaCartPlus } from "react-icons/fa";
+import {
+  FaChartBar,
+  FaChartPie,
+  FaChartLine,
+  FaCartPlus,
+} from "react-icons/fa";
 import { GrTransaction } from "react-icons/gr";
 import { RiCoupon2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -15,10 +20,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <button
-        className="md:hidden p-4"
-        onClick={toggleSidebar}
-      >
+      <button className="md:hidden p-4" onClick={toggleSidebar}>
         <FaCartPlus />
       </button>
       <div
