@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 # Ignore uploads folder in Backend
 Backend/uploads
+*.env

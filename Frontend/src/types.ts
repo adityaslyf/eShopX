@@ -1,25 +1,24 @@
-export type OrderItemTypes = {
+export type OrderItemType = {
   name: string;
+  photo: string;
   price: number;
   quantity: number;
-  photo: string;
   _id: string;
 };
 
 export type OrderType = {
   name: string;
   address: string;
-  phone: string;
-  email: string;
-  orderItems: OrderItemTypes[];
-  pincode: string;
-  _id: string;
-  state: string;
-  status: "Processing" | "Shipped" | "Delivered" | "Cancelled";
-  totalAmount: number;
-  discount: number;
-  tax: number;
-  shippingCharge: number;
-  subTotal: number;
+  city: string;
   country: string;
+  state: string;
+  pinCode: number;
+  status: "Processing" | "Shipped" | "Delivered";
+  subtotal: number;
+  discount: number;
+  shippingCharges: number;
+  tax: number;
+  total: number;
+  orderItems: OrderItemType[];
+  _id: string;
 };

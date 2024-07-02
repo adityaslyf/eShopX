@@ -96,127 +96,130 @@ const arr: DataType[] = [
       </Link>
     ),
   },
- 
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
- 
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
- 
 
+  {
+    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
+    name: "Puma Shoes Air Jordan 2023",
+    price: 690,
+    stock: 3,
+    action: (
+      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
+        Manage
+      </Link>
+    ),
+  },
+  {
+    photo: (
+      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
+    ),
+    name: "Macbook",
+    price: 232223,
+    stock: 213,
+    action: (
+      <Link
+        to="/admin/product/sdaskdnkasjdn"
+        className="text-blue-500 underline"
+      >
+        Manage
+      </Link>
+    ),
+  },
+  {
+    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
+    name: "Puma Shoes Air Jordan 2023",
+    price: 690,
+    stock: 3,
+    action: (
+      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
+        Manage
+      </Link>
+    ),
+  },
+  {
+    photo: (
+      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
+    ),
+    name: "Macbook",
+    price: 232223,
+    stock: 213,
+    action: (
+      <Link
+        to="/admin/product/sdaskdnkasjdn"
+        className="text-blue-500 underline"
+      >
+        Manage
+      </Link>
+    ),
+  },
+
+  {
+    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
+    name: "Puma Shoes Air Jordan 2023",
+    price: 690,
+    stock: 3,
+    action: (
+      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
+        Manage
+      </Link>
+    ),
+  },
+  {
+    photo: (
+      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
+    ),
+    name: "Macbook",
+    price: 232223,
+    stock: 213,
+    action: (
+      <Link
+        to="/admin/product/sdaskdnkasjdn"
+        className="text-blue-500 underline"
+      >
+        Manage
+      </Link>
+    ),
+  },
+  {
+    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
+    name: "Puma Shoes Air Jordan 2023",
+    price: 690,
+    stock: 3,
+    action: (
+      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
+        Manage
+      </Link>
+    ),
+  },
+  {
+    photo: (
+      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
+    ),
+    name: "Macbook",
+    price: 232223,
+    stock: 213,
+    action: (
+      <Link
+        to="/admin/product/sdaskdnkasjdn"
+        className="text-blue-500 underline"
+      >
+        Manage
+      </Link>
+    ),
+  },
 ];
 
 const Products = () => {
   const [data] = useState<DataType[]>(arr);
 
   const table = useCallback(
-    Table<DataType>(columns, data, "product-container mx-auto p-4", "Products" ,true),
-    [data],
-
+    Table<DataType>(
+      columns,
+      data,
+      "product-container mx-auto p-4",
+      "Products",
+      true
+    ),
+    [data]
   );
 
   return (
@@ -228,9 +231,13 @@ const Products = () => {
         </div>
       </main>
       <Link to="/admin/products/new">
-        <FaPlus color="white" size={35} className="  bg-green-500 rounded-full m-6 border b" />
+        <FaPlus
+          color="white"
+          size={35}
+          className="  bg-green-500 rounded-full m-6 border b"
+        />
       </Link>
-    </div>  
+    </div>
   );
 };
 

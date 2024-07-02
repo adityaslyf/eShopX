@@ -67,7 +67,7 @@ const arr: DataType[] = [
   {
     avatar: (<img src={img2} alt="Avatar" className="w-20 h-20 object-cover" />),
     name: "John Doe",
-    email: "a@gmail.com", 
+    email: "a@gmail.com",
     role: "Admin",
     genger:"male",
     action: <button className="text-blue-500 underline">Manage</button>,

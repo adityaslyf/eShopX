@@ -9,6 +9,7 @@ const Sidebar = lazy(() => import("./components/Sidebar"));
 const Home = lazy(() => import("./Home"));
 const NewProduct = lazy(() => import("./management/NewProduct"));
 const ProuductEdit = lazy(() => import("./management/ProuductEdit"));
+const TransactionManagement = lazy(() => import("./management/TransactionManagement"));
 const App = () => {
   return (
     <Router>
@@ -26,6 +27,7 @@ const App = () => {
           {/* management */}
           <Route path="/admin/products/new" element={<NewProduct />} />
           <Route path="/admin/products/:id" element={<ProuductEdit />} />
+          <Route path="/admin/transaction/:id" element={<TransactionManagement />} />
 
 
         </Routes>
