@@ -188,8 +188,8 @@ export const PieChart = ({
 interface LineChartProps {
   data: number[];
   label: string;
-  backgroundColor: string;
-  borderColor: string;
+  backgroundColor: string[];
+  borderColor: string[];
   labels?: string[];
 }
 
