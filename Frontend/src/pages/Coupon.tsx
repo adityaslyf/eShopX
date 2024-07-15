@@ -1,4 +1,4 @@
-import   { useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { Link } from "react-router-dom";
 
@@ -7,6 +7,8 @@ const Coupon = () => {
   const [includeCharacters, setIncludeCharacters] = useState(false);
   const [includeSymbols, setIncludeSymbols] = useState(false);
   const [couponCode, setCouponCode] = useState("");
+  const [textToInclude, setTextToInclude] = useState("");
+  const [codeLength, setCodeLength] = useState(10);
 
   const generateCouponCode = () => {
     let characters = "";
@@ -16,9 +18,10 @@ const Coupon = () => {
 
     if (characters.length === 0) return;
 
-    let result = "";
-    const length = 10; // You can change the length as needed
-    for (let i = 0; i < length; i++) {
+    let result = textToInclude;
+    const remainingLength = codeLength - textToInclude.length;
+
+    for (let i = 0; i < remainingLength; i++) {
       const randomIndex = Math.floor(Math.random() * characters.length);
       result += characters[randomIndex];
     }
@@ -38,11 +41,15 @@ const Coupon = () => {
                 <input
                   type="text"
                   placeholder="Text to include"
+                  value={textToInclude}
+                  onChange={(e) => setTextToInclude(e.target.value)}
                   className="px-2 py-2 border border-gray-300 h-full w-96 rounded-md"
                 />
                 <input
                   type="number"
                   placeholder="Number"
+                  value={codeLength}
+                  onChange={(e) => setCodeLength(Number(e.target.value))}
                   className="px-2 py-1 h-full border border-gray-300 w-44 rounded-md"
                 />
               </div>
