@@ -9,16 +9,19 @@ const Sidebar = lazy(() => import("./components/Sidebar"));
 const Home = lazy(() => import("./Home"));
 const NewProduct = lazy(() => import("./management/NewProduct"));
 const ProuductEdit = lazy(() => import("./management/ProuductEdit"));
-const TransactionManagement = lazy(() => import("./management/TransactionManagement"));
+const TransactionManagement = lazy(
+  () => import("./management/TransactionManagement")
+);
 const Bar = lazy(() => import("./chart/Barchart"));
 const Pie = lazy(() => import("./chart/PieChart"));
 const Line = lazy(() => import("./chart/LineChart"));
+const Coupon = lazy(() => import("./pages/Coupon"));
 
 const App = () => {
   return (
     <Router>
       {/* <Suspense fallback={<Loader />}> */}
-      <Suspense>             
+      <Suspense>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -33,9 +36,12 @@ const App = () => {
           {/* management */}
           <Route path="/admin/products/new" element={<NewProduct />} />
           <Route path="/admin/products/:id" element={<ProuductEdit />} />
-          <Route path="/admin/transaction/:id" element={<TransactionManagement />} />
-
-
+          <Route
+            path="/admin/transaction/:id"
+            element={<TransactionManagement />}
+          />
+          {/* Apps */}
+          <Route path="/admin/apps/Coupon" element={<Coupon />} />
         </Routes>
       </Suspense>
     </Router>
