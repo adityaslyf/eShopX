@@ -18,7 +18,7 @@ const App = () => {
   return (
     <Router>
       {/* <Suspense fallback={<Loader />}> */}
-      <Suspense>
+      <Suspense>             
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -29,8 +29,6 @@ const App = () => {
           <Route path="/admin/charts/bar" element={<Bar />} />
           <Route path="/admin/charts/pie" element={<Pie />} />
           <Route path="/admin/charts/line" element={<Line />} />
-
-
 
           {/* management */}
           <Route path="/admin/products/new" element={<NewProduct />} />

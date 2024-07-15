@@ -15,13 +15,13 @@ import DashboardTable from "../components/DashboardTable";
 
 const Dashboard = () => {
   return (
-    <div className="dashboard bg-gray-100 h-screen w-full font-serif overflow-y-auto">
-      <div className="navbar bg-white flex items-center justify-between shadow-xl h-16 p-2 m-2 rounded-lg">
+    <div className="dashboard bg- h-screen w-full font-serif overflow-y-auto">
+      <div className="navbar bg-violet-600 flex items-center justify-between shadow-xl h-16 p-2 m-2 rounded-lg">
         <div className="left_bar flex items-center m-5 gap-3">
           <CiSearch />
           <input
             type="text"
-            className="bg-gray-50 ml-2 w-full rounded-md px-2 py-1"
+            className="bg-violet-600 ml-2 w-full rounded-md px-2 py-1"
             placeholder="Search for data, user, docs"
           />
         </div>
@@ -63,7 +63,7 @@ const Dashboard = () => {
 
       <section className="p-4">
         <div className="graph-container flex flex-col lg:flex-row gap-4 justify-evenly">
-          <div className="revenue-chart bg-white h-auto shadow-lg w-full lg:w-5/6 p-6 rounded-lg">
+          <div className="revenue-chart bg-[#90e0ef] h-auto shadow-lg w-full lg:w-5/6 p-6 rounded-lg">
             <span className="flex justify-center text-gray-700 text-lg md:text-xl mb-4">
               REVENUE & TRANSACTION
             </span>
@@ -77,7 +77,7 @@ const Dashboard = () => {
             />
           </div>
 
-          <div className="dashboard-inventory bg-white flex flex-col justify-center w-full lg:w-1/4 h-auto lg:h-[665px] space-y-5 shadow-lg p-6 rounded-lg">
+          <div className="dashboard-inventory bg-[#90e0ef] flex flex-col justify-center w-full lg:w-1/4 h-auto lg:h-[665px] space-y-5 shadow-lg p-6 rounded-lg">
             <span className="text-center text-gray-700 text-xl md:text-2xl font-light">
               INVENTORY
             </span>
@@ -97,7 +97,7 @@ const Dashboard = () => {
 
       <section className="transaction_container">
         <div className="chart_table flex flex-col md:flex-row justify-between m-6">
-          <div className="chart relative w-full max-w-[25rem] shadow-xl h-[25rem] bg-white rounded-lg p-6">
+          <div className="chart relative w-full max-w-[25rem] shadow-xl h-[25rem] bg-[#f5cac3] rounded-lg p-6">
             <h1 className="text-center text-2xl text-gray-700 mb-4">
               GENDER RATIO
             </h1>
@@ -116,7 +116,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="transaction_table w-full mt-6 m-2 md:mt-0 bg-white rounded-lg p-6 shadow-lg">
+          <div className="transaction_table w-full mt-6 m-2 md:mt-0 bg-[#f5cac3] rounded-lg p-6 shadow-lg">
             <DashboardTable data={data.transaction} />
           </div>
         </div>
@@ -145,7 +145,7 @@ const WidgetItem = ({
   const offset = circumference - (percentage / 100) * circumference;
 
   return (
-    <article className="widget w-64 h-36 p-6 shadow-lg bg-white rounded-md flex justify-between">
+    <article className="widget w-64 h-36 p-6 shadow-lg bg-[#ee9b00] rounded-md flex justify-between">
       <div className="widgetInfo">
         <h1 className="text-gray-700">{heading}</h1>
         <p className="text-gray-700">{amount ? `$${value}` : value}</p>

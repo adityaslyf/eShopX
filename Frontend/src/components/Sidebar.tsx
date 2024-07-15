@@ -24,7 +24,7 @@ const Sidebar = () => {
         <FaCartPlus />
       </button>
       <div
-        className={`bg-gray-100 flex flex-col shadow-2xl w-fit pr-14 h-screen space-y-6 font-serif transform ${
+        className={`bg-gray-700  text-white flex flex-col shadow-2xl w-fit pr-14 h-screen space-y-6 font-serif transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 transition-transform duration-300 ease-in-out md:block hidden`}
       >
