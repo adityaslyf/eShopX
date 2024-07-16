@@ -30,38 +30,36 @@ const products = [
     price: "$10",
     rating: "4.5",
     imageUrl:
-      "https://cdn.pixabay.com/photo/2021/07/10/15/45/online-shop-6401739_640.png",
+      "https://m.media-amazon.com/images/I/71jG+e7roXL._AC_UY218_.jpg",
   },
   {
     name: "Product 2",
     price: "$20",
     rating: "4.0",
     imageUrl:
-      "https://cdn.pixabay.com/photo/2016/11/22/21/57/apparel-1850804_640.jpg",
+      "https://m.media-amazon.com/images/I/812yohjGZ2L._AC_UY218_.jpg",
   },
   {
     name: "Product 3",
     price: "$30",
     rating: "5.0",
     imageUrl:
-      "https://cdn.pixabay.com/photo/2019/07/13/16/44/woman-4335235_640.jpg",
+      "https://m.media-amazon.com/images/I/71A68Sti-4L._AC_UY218_.jpg",
   },
-    {
-        name: "Product 4",
-        price: "$40",
-        rating: "4.8",
-        imageUrl:
-        "https://cdn.pixabay.com/photo/2020/01/30/21/24/shop-4806610_640.jpg",
-    },
-    {
-        name: "Product 5",
-        price: "$50",
-        rating: "4.7",
-        imageUrl:
-        "https://cdn.pixabay.com/photo/2020/01/30/21/24/shop-4806610_640.jpg",
-    },
-   
-
+  {
+    name: "Product 4",
+    price: "$40",
+    rating: "4.8",
+    imageUrl:
+      "https://m.media-amazon.com/images/I/813BY8cbW8L._AC_UY218_.jpg",
+  },
+  {
+    name: "Product 5",
+    price: "$50",
+    rating: "4.7",
+    imageUrl:
+      "https://m.media-amazon.com/images/I/7159GCFgGiL._AC_UY218_.jpg",
+  },
 ];
 
 const Home = () => {

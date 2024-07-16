@@ -33,7 +33,7 @@ const Carousel: React.FC<CarouselProps> = ({ images, interval = 3000 }) => {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full ${currentIndex === index ? 'bg-white' : 'bg-gray-400'}`}
+            className={`w-3 h-3 hidden rounded-full ${currentIndex === index ? 'bg-white' : 'bg-gray-400'}`}
           ></button>
         ))}
       </div>
