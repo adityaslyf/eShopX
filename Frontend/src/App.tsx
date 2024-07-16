@@ -26,7 +26,7 @@ const App = () => {
       {/* <Suspense fallback={<Loader />}> */}
       <Suspense>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/admin/home" element={<Home />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/customers" element={<Customers />} />
           <Route path="/admin/products" element={<Products />} />
@@ -47,7 +47,7 @@ const App = () => {
           <Route path="/admin/apps/Coupon" element={<Coupon />} />
 
           {/* User Routes */}
-          <Route path="/user" element={<UserHome />} />
+          <Route path="/" element={<UserHome />} />
         </Routes>
       </Suspense>
     </Router>

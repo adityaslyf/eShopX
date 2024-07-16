@@ -48,7 +48,7 @@ const Header = () => {
           </button>
           <dialog open={isOpen}>
             <div>
-              {user.role === "admin" && <Link to="/">Admin</Link>}
+              {user.role === "admin" && <Link to="/admin/home">Admin</Link>}
 
               <Link to="/user/orders">Orders</Link>
               <button onClick={(logout)}>
