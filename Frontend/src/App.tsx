@@ -17,13 +17,16 @@ const Pie = lazy(() => import("./chart/PieChart"));
 const Line = lazy(() => import("./chart/LineChart"));
 const Coupon = lazy(() => import("./pages/Coupon"));
 
+// user routes
+const UserHome = lazy(() => import("./pages/User/Home"));
+
 const App = () => {
   return (
     <Router>
       {/* <Suspense fallback={<Loader />}> */}
       <Suspense>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/admin/home" element={<Home />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/customers" element={<Customers />} />
           <Route path="/admin/products" element={<Products />} />
@@ -42,6 +45,9 @@ const App = () => {
           />
           {/* Apps */}
           <Route path="/admin/apps/Coupon" element={<Coupon />} />
+
+          {/* User Routes */}
+          <Route path="/" element={<UserHome />} />
         </Routes>
       </Suspense>
     </Router>
