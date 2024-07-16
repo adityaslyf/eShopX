@@ -22,7 +22,7 @@ const Header = () => {
   };
 
   return (
-    <nav className=" flex justify-end p-4 space-x-8 bg-blue-200 rounded-sm static w-full">
+    <nav className=" flex justify-end p-4 space-x-8  rounded-sm static w-full">
       <Link to="/">
         <FaHome size={26} onClick={() => setIsOpen(false)} />
       </Link>
@@ -48,7 +48,7 @@ const Header = () => {
           </button>
           <dialog open={isOpen}>
             <div>
-              {user.role === "admin" && <Link to="/admin/home">Admin</Link>}
+              {user.role === "admin" && <Link to="/">Admin</Link>}
 
               <Link to="/user/orders">Orders</Link>
               <button onClick={(logout)}>
