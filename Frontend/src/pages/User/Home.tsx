@@ -24,6 +24,46 @@ const categories = [
   "Fitness",
 ];
 
+const products = [
+  {
+    name: "Product 1",
+    price: "$10",
+    rating: "4.5",
+    imageUrl:
+      "https://cdn.pixabay.com/photo/2021/07/10/15/45/online-shop-6401739_640.png",
+  },
+  {
+    name: "Product 2",
+    price: "$20",
+    rating: "4.0",
+    imageUrl:
+      "https://cdn.pixabay.com/photo/2016/11/22/21/57/apparel-1850804_640.jpg",
+  },
+  {
+    name: "Product 3",
+    price: "$30",
+    rating: "5.0",
+    imageUrl:
+      "https://cdn.pixabay.com/photo/2019/07/13/16/44/woman-4335235_640.jpg",
+  },
+    {
+        name: "Product 4",
+        price: "$40",
+        rating: "4.8",
+        imageUrl:
+        "https://cdn.pixabay.com/photo/2020/01/30/21/24/shop-4806610_640.jpg",
+    },
+    {
+        name: "Product 5",
+        price: "$50",
+        rating: "4.7",
+        imageUrl:
+        "https://cdn.pixabay.com/photo/2020/01/30/21/24/shop-4806610_640.jpg",
+    },
+   
+
+];
+
 const Home = () => {
   return (
     <div className="h-auto bg-blue-50">
@@ -49,13 +89,22 @@ const Home = () => {
         </section>
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-4xl font-bold text-gray-800">Latest Products</h1>
-          <Link to="/search" className="text-lg text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out">
+          <Link
+            to="/search"
+            className="text-lg text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+          >
             More
           </Link>
         </div>
         <section className="flex gap-6 justify-center flex-wrap">
-          {[1, 2, 3, 4, 5].map((product, index) => (
-            <ProductCard key={index} />
+          {products.map((product, index) => (
+            <ProductCard
+              key={index}
+              name={product.name}
+              price={product.price}
+              rating={product.rating}
+              imageUrl={product.imageUrl}
+            />
           ))}
         </section>
       </main>
