@@ -19,6 +19,7 @@ const Coupon = lazy(() => import("./pages/Coupon"));
 
 // user routes
 const UserHome = lazy(() => import("./pages/User/Home"));
+const Cart = lazy(() => import("./pages/User/Cart"));
 
 const App = () => {
   return (
@@ -48,6 +49,8 @@ const App = () => {
 
           {/* User Routes */}
           <Route path="/" element={<UserHome />} />
+          <Route path="/cart" element={<Cart />} />
+
         </Routes>
       </Suspense>
     </Router>

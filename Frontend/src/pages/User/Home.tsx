@@ -2,6 +2,8 @@ import Header from "../../components/User/Header";
 import { Link } from "react-router-dom";
 import Carousel from "../../components/User/Carousel";
 import ProductCard from "../../components/User/ProductCard";
+import Footer from "../../components/User/Footer";
+// import VideoBackground from "../../components/User/VideoBackground";
 
 const images = [
   "https://cdn.pixabay.com/photo/2020/01/30/21/24/shop-4806610_640.jpg",
@@ -29,36 +31,31 @@ const products = [
     name: "Product 1",
     price: "$10",
     rating: "4.5",
-    imageUrl:
-      "https://m.media-amazon.com/images/I/71jG+e7roXL._AC_UY218_.jpg",
+    imageUrl: "https://m.media-amazon.com/images/I/71jG+e7roXL._AC_UY218_.jpg",
   },
   {
     name: "Product 2",
     price: "$20",
     rating: "4.0",
-    imageUrl:
-      "https://m.media-amazon.com/images/I/812yohjGZ2L._AC_UY218_.jpg",
+    imageUrl: "https://m.media-amazon.com/images/I/812yohjGZ2L._AC_UY218_.jpg",
   },
   {
     name: "Product 3",
     price: "$30",
     rating: "5.0",
-    imageUrl:
-      "https://m.media-amazon.com/images/I/71A68Sti-4L._AC_UY218_.jpg",
+    imageUrl: "https://m.media-amazon.com/images/I/71A68Sti-4L._AC_UY218_.jpg",
   },
   {
     name: "Product 4",
     price: "$40",
     rating: "4.8",
-    imageUrl:
-      "https://m.media-amazon.com/images/I/813BY8cbW8L._AC_UY218_.jpg",
+    imageUrl: "https://m.media-amazon.com/images/I/813BY8cbW8L._AC_UY218_.jpg",
   },
   {
     name: "Product 5",
     price: "$50",
     rating: "4.7",
-    imageUrl:
-      "https://m.media-amazon.com/images/I/7159GCFgGiL._AC_UY218_.jpg",
+    imageUrl: "https://m.media-amazon.com/images/I/7159GCFgGiL._AC_UY218_.jpg",
   },
 ];
 
@@ -106,6 +103,10 @@ const Home = () => {
           ))}
         </section>
       </main>
+      {/* <VideoBackground /> */}
+      <Footer />
+      
+
     </div>
   );
 };
