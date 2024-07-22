@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
+
 // import Loader from "./components/Loader";
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Customers = lazy(() => import("./pages/Customers"));
@@ -21,6 +22,7 @@ const Coupon = lazy(() => import("./pages/Coupon"));
 const UserHome = lazy(() => import("./pages/User/Home"));
 const Cart = lazy(() => import("./pages/User/Cart"));
 const Shipping = lazy(() => import("./pages/User/Shipping"));
+const Login = lazy(() => import("./pages/User/Login"));
 
 const App = () => {
   return (
@@ -52,6 +54,7 @@ const App = () => {
           <Route path="/" element={<UserHome />} />
           <Route path="/cart" element={<Cart />} />
           <Route path ="/shipping" element = {<Shipping />} />
+          <Route path="/login" element={<Login />} />
 
         </Routes>
       </Suspense>
