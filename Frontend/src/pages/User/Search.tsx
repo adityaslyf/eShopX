@@ -37,13 +37,14 @@ const products = [
     },
   ];
 
-  
+
 const Search = () => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("none");
   const [maxPrice, setMaxPrice] = useState(100000);
   const [category, setCategory] = useState("none");
-  const [page, setPage] = useState(1);
+//   const [page, setPage] = useState(1);
+
 
 
 
@@ -56,6 +57,7 @@ const Search = () => {
           <select
             name="filter"
             className="w-full p-2 border border-gray-300 rounded-lg"
+            value={sort}
             onChange={(e) => setSort(e.target.value)}
           >
             <option value="none">None</option>
