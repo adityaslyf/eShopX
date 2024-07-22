@@ -45,13 +45,13 @@ const Search = () => {
   const isNextPageAvailable = page < 3;
 
   return (
-    <div className="flex p-6 bg-gray-100 min-h-screen">
-      <aside className="w-1/4 p-4 bg-white rounded-lg shadow-lg">
+    <div className="flex p-6 bg-gray-900 min-h-screen text-gray-100 font-sans">
+      <aside className="w-1/4 p-4 bg-gray-800 rounded-lg shadow-lg">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2">Filter</h1>
+          <h1 className="text-2xl font-bold mb-2 text-purple-300">Filter</h1>
           <select
             name="filter"
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
           >
@@ -61,12 +61,12 @@ const Search = () => {
           </select>
         </div>
         <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2">Category</h1>
+          <h1 className="text-2xl font-bold mb-2 text-purple-300">Category</h1>
           <select
             name="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+            className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             <option value="none">None</option>
             <option value="electronics">Electronics</option>
@@ -75,28 +75,27 @@ const Search = () => {
           </select>
         </div>
         <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2">Max Price: ${maxPrice}</h1>
+          <h1 className="text-2xl font-bold mb-2 text-purple-300">Max Price: ${maxPrice}</h1>
           <input
             type="range"
             min={100}
             max={100000}
             value={maxPrice}
             onChange={(e) => setMaxPrice(Number(e.target.value))}
-            className="w-full"
+            className="w-full accent-purple-500"
           />
         </div>
       </aside>
-      <main className="w-3/4 p-4 ml-6 bg-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-4">Products</h1>
+      <main className="w-3/4 p-4 ml-6 bg-gray-800 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-4 text-purple-300">Products</h1>
         <input
           type="text"
           placeholder="Search by name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-2 mb-6 border border-gray-300 rounded-lg"
+          className="w-full p-2 mb-6 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
         <div className="grid grid-cols-3 gap-4">
-          {/* Replace with dynamic product card rendering based on your data */}
           {products.map((product, index) => (
             <ProductCard
               key={index}
@@ -107,17 +106,17 @@ const Search = () => {
             />
           ))}
         </div>
-        <article className=" flex justify-center mt-12 space-x-5">
+        <article className="flex justify-center mt-12 space-x-5">
           <button
             onClick={() => {
               setPage((prev) => prev - 1);
             }}
             disabled={!isPrevPageAvailable}
-            className=" border border-gray-700 bg-blue-500 rounded-sm"
+            className="px-4 py-2 bg-purple-600 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-700 transition duration-300"
           >
-            Prev..
+            Prev
           </button>
-          <span>
+          <span className="flex items-center text-lg">
             {page} of {3}
           </span>
           <button
@@ -125,7 +124,7 @@ const Search = () => {
               setPage((prev) => prev + 1);
             }}
             disabled={!isNextPageAvailable}
-            className=" border border-gray-700 bg-blue-500 rounded-sm"
+            className="px-4 py-2 bg-purple-600 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-700 transition duration-300"
           >
             Next
           </button>

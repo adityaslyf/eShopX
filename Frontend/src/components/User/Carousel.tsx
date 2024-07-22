@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import 'tailwindcss/tailwind.css';
+import React, { useEffect, useState } from "react";
+import "tailwindcss/tailwind.css";
 
 interface CarouselProps {
   images: string[];
@@ -20,11 +20,18 @@ const Carousel: React.FC<CarouselProps> = ({ images, interval = 3000 }) => {
   }, [images.length, interval]);
 
   return (
-    <div className="relative w-full max-w-[1600px] overflow-hidden h-[550px] flex mx-auto  mt-12 rounded-md">
-      <div className="flex transition-transform duration-1000" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+    <div className="relative w-full max-w-[1600px] overflow-hidden h-auto max-h-[450px] flex mx-auto  mt-12 rounded-md">
+      <div
+        className="flex transition-transform duration-1000"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
         {images.map((image, index) => (
-          <div key={index} className="w-full flex-shrink-0">
-            <img src={image} alt={`Slide ${index + 1}`} className="w-full h-auto object-cover" />
+          <div key={index} className="w-full flex-shrink-0  ">
+            <img
+              src={image}
+              alt={`Slide ${index + 1}`}
+              className="w-full object-cover object-center "
+            />
           </div>
         ))}
       </div>
@@ -33,7 +40,9 @@ const Carousel: React.FC<CarouselProps> = ({ images, interval = 3000 }) => {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 hidden rounded-full ${currentIndex === index ? 'bg-white' : 'bg-gray-400'}`}
+            className={`w-3 h-3 hidden rounded-full ${
+              currentIndex === index ? "bg-white" : "bg-gray-400"
+            }`}
           ></button>
         ))}
       </div>

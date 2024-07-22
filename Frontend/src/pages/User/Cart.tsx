@@ -60,17 +60,17 @@ const Cart = () => {
   ];
 
   return (
-    <main className=" flex justify-between">
-      <section className=" w-[1200px]">
+    <main className="flex justify-between bg-gray-900 text-gray-100 min-h-screen p-6 font-sans">
+      <section className="w-2/3 pr-6">
         {CartItems.map((item, index) => (
           <CartItem key={index} cartItem={item} />
         ))}
       </section>
 
-      <div className="min-h-screen flex justify-end mt-28 w-[35em] ">
-        <div className="bg-white  rounded-lg p-8 max-w-lg w-full">
-          <h1 className="text-2xl font-semibold mb-6">Shopping Cart</h1>
-          <div className="mb-4">
+      <div className="w-1/3">
+        <div className="bg-gray-800 rounded-lg p-8 shadow-lg">
+          <h1 className="text-2xl font-semibold mb-6 text-purple-300">Shopping Cart</h1>
+          <div className="mb-4 space-y-2">
             <p className="flex justify-between">
               <span>Subtotal:</span>
               <span>₹{subtotal}</span>
@@ -84,12 +84,12 @@ const Cart = () => {
               <span>₹{tax}</span>
             </p>
             {isCouponApplied && (
-              <p className="flex justify-between text-green-600">
+              <p className="flex justify-between text-green-400">
                 <span>Discount:</span>
                 <span>- ₹{discount}</span>
               </p>
             )}
-            <p className="flex justify-between font-semibold text-lg mt-4">
+            <p className="flex justify-between font-semibold text-lg mt-4 text-purple-300">
               <span>Total:</span>
               <span>₹{total}</span>
             </p>
@@ -102,16 +102,16 @@ const Cart = () => {
               onChange={(e) => {
                 setCoupon(e.target.value);
               }}
-              className="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-gray-700 border border-gray-600 p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-100"
             />
           </div>
           {coupon &&
             (isCouponApplied ? (
-              <p className="text-green-600 mb-4">{discount} discount applied</p>
+              <p className="text-green-400 mb-4">{discount} discount applied</p>
             ) : (
-              <p className="text-red-600 mb-4">Invalid Coupon</p>
+              <p className="text-red-400 mb-4">Invalid Coupon</p>
             ))}
-          <button className="bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 w-full rounded-md transition-colors">
+          <button className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 w-full rounded-md transition-colors">
             Checkout
           </button>
         </div>
@@ -119,5 +119,6 @@ const Cart = () => {
     </main>
   );
 };
+
 
 export default Cart;
