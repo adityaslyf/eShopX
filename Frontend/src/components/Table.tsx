@@ -36,7 +36,7 @@ function Table<T extends Object>(
       canPreviousPage,
       pageCount,
       state: { pageIndex },
-      gotoPage,
+      // gotoPage,
     } = useTable(options, useSortBy, usePagination);
 
     return (
@@ -94,38 +94,39 @@ function Table<T extends Object>(
           </tbody>
         </table>
         {showPagination && (
-          <div className=" ">
-            <span>{`${pageIndex + 1} Page of ${pageCount}`}</span>
+          <div className=" flex justify-center space-x-7 mt-8">
+           
             <button
               disabled={!canNextPage}
               onClick={nextPage}
-              className=" rounded-sm bg-slate-600 p-2  m-3"
+              className=" rounded-md bg-blue-600 p-2 m-3 hover:bg-green-600"
             >
               Next
             </button>
+            <span className=" mt-5">{`${pageIndex + 1} Page of ${pageCount}`}</span>
             <button
               disabled={!canPreviousPage}
               onClick={previousPage}
-              className=" rounded-sm bg-slate-600 p-2"
+              className=" rounded-md bg-blue-600 p-2 m-3 hover:bg-green-600"
             >
               Previous
             </button>
-            <button
+            {/* <button
               onClick={() => {
                 gotoPage(0);
               }}
-              className="rounded-sm bg-slate-600 p-2  m-3"
+              className="rounded-sm bg-blue-600 p-2  m-3"
             >
               1st page
-            </button>
-            <button
+            </button> */}
+            {/* <button
               onClick={() => {
                 gotoPage(pageCount - 1);
               }}
-              className="rounded-sm bg-slate-600 p-2  m-3"
+              className="rounded-sm bg-blue-600 p-2  m-3"
             >
               last page
-            </button>
+            </button> */}
           </div>
         )}
       </div>
