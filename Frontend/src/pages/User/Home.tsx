@@ -194,7 +194,7 @@ const Home = () => {
         {/* Testimonials Section */}
         <section className=" py-8 rounded-md  mb-12">
           <h2 className="text-3xl font-bold text-center mb-6">What Our Customers Say</h2>
-          <div className="flex justify-center space-x-6">
+          <div className="flex flex-col space-y-7 md:space-y-0 md:flex-row justify-center space-x-6">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
@@ -216,7 +216,7 @@ const Home = () => {
         {/* Brand Logos Section */}
         <section className="py-8 mb-12">
           <h2 className="text-3xl font-bold text-center mb-6">Our Partners</h2>
-          <div className="flex justify-center space-x-8">
+          <div className="flex  flex-col space-y-2 md:flex-row  justify-center space-x-8">
             {brandLogos.map((logo, index) => (
               <motion.img
                 key={index}
