@@ -72,17 +72,17 @@ const products = [
 const testimonials = [
   {
     quote: "This is the best online shopping experience I've ever had!",
-    name: "John Doe",
+    name: "Aditya",
     position: "CEO of Company",
   },
   {
     quote: "Amazing products and great customer service!",
-    name: "Jane Smith",
+    name: "Shubham",
     position: "Marketing Manager",
   },
   {
     quote: "I love the variety and quality of the products.",
-    name: "Emily Johnson",
+    name: "Pratham",
     position: "Product Designer",
   },
 ];

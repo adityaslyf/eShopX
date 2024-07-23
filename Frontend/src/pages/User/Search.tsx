@@ -132,6 +132,6 @@ const Search = () => {
       </main>
     </div>
   );
-};
+};  
 
 export default Search;
