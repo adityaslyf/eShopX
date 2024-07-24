@@ -1,3 +1,4 @@
+import { allOrders } from "./order";
 import { MyCache } from "../app.js";
 import { TryCatch } from "../middleware/error.js";
 import { Order } from "../models/order.js";
@@ -39,24 +40,56 @@ export const newOrder = TryCatch(async (req, res, next) => {
 });
 
 export const MyOrder = TryCatch(async (req, res, next) => {
-  const order = await Order.find({ user: req.params.id });
+  const userId = req.params.id;
+  const key = "user_orders_${userId}";
 
-  if (MyCache.has("orders")) {
-    MyCache.set("orders", order);
-  } else {
-    MyCache.set("orders", order, 3600);
+  if (MyCache.has(key)) {
+    const cachedOrders = MyCache.get(key);
+    return res.status(200).json({
+      status: "success",
+      message: "Orders retrieved successfully",
+      cachedOrders,
+    });
   }
+
+  const orders = await Order.find({ user: userId });
+
+  if (!orders || orders.length === 0) {
+    return next(new ErrorHandler("No orders found", 404));
+  }
+  MyCache.set(key, orders, 3600);
   return res.status(200).json({
     status: "success",
-    order,
+    message: "Orders retrieved successfully",
   });
+});
 
-  if (!order) {
-    return next(new ErrorHandler("Order not found", 404));
+export const allOrders = TryCatch(async (req, res, next) => {
+  const key = "all-orders";
+
+  if (MyCache.has(key)) {
+    const cachedAllorders = MyCache.get(key);
+    return res.status(200).json({
+      status: "success",
+      message: "Orders retrieved successfully",
+      cachedAllorders,
+    });
   }
+
+  const allOrders = await Order.find();
+
+  if (!allOrders || allOrders.length === 0) {
+    return res.status(404).json({
+      status: "fail",
+      message: "No orders found",
+    });
+  }
+
+  MyCache.set(key, allOrders, 3600);
 
   return res.status(200).json({
     status: "success",
-    order,
+    message: "Orders retrieved successfully",
+    allOrders,
   });
 });
