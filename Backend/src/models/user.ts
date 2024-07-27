@@ -2,7 +2,7 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 import validator from "validator";
 
 interface IUser extends Document {
-  _id: string;
+  
   name: string;
   photo: string;
   role: "admin" | "user";
@@ -18,11 +18,11 @@ interface IUser extends Document {
 const userSchema: Schema<IUser> = new mongoose.Schema(
   {
     _id: {
-      type: String,
-      required: [true, "ID is required"],
+      type: Schema.Types.ObjectId,
+      required: [true, "Please enter ID"],
     },
     name: {
-      type: String,
+      type: Schema.Types.String,
       required: [true, "Name is required"],
     },
     email: {
@@ -60,18 +60,18 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
   }
 );
 
-userSchema.virtual("age").get(function () {
-  const today = new Date();
-  const dob = this.dob;
-  let age = today.getFullYear() - dob.getFullYear();
-  if (
-    today.getMonth < dob.getMonth ||
-    (today.getMonth === dob.getMonth && today.getDate() < dob.getDate())
-  ) {
-    age--;
-  }
-  return age;
-});
+// userSchema.virtual("age").get(function () {
+//   const today = new Date();
+//   const dob = this.dob;
+//   let age = today.getFullYear() - dob.lYear();
+//   if (
+//     today.getMonth() < dob.getMonth() ||
+//     (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())
+//   ) {
+//     age--;
+//   }
+//   return age;
+// });
 
 const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
 

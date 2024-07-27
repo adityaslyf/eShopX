@@ -8,7 +8,7 @@ const app = express.Router();
 app.post('/new' , newUser)
 
 // route - /api/v1/user/all
-app.get("/all" , isAdmin , getAllUsers)
+app.get("/all"  , getAllUsers)
 
 //route - api/v1/user/dynamic id
 app.route("/:id").get(getUser).delete(deleteUser) // this is the same as the above two lines

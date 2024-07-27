@@ -1,4 +1,3 @@
-import { allOrders } from "./order";
 import { MyCache } from "../app.js";
 import { TryCatch } from "../middleware/error.js";
 import { Order } from "../models/order.js";
@@ -39,57 +38,63 @@ export const newOrder = TryCatch(async (req, res, next) => {
   });
 });
 
+
 export const MyOrder = TryCatch(async (req, res, next) => {
-  const userId = req.params.id;
-  const key = "user_orders_${userId}";
+  const userId = req.query.id;
+  console.log(userId)
+
+  if (!userId) {
+    return next(new ErrorHandler("User ID is required", 400));
+  }
+
+  const key = `user_orders_${userId}`;
 
   if (MyCache.has(key)) {
     const cachedOrders = MyCache.get(key);
     return res.status(200).json({
       status: "success",
-      message: "Orders retrieved successfully",
-      cachedOrders,
+      message: "Orders retrieved successfully from cache",
+      orders: cachedOrders,
     });
   }
 
-  const orders = await Order.find({ user: userId });
+  const orders = await Order.find({ user: userId }).populate("user");
 
   if (!orders || orders.length === 0) {
     return next(new ErrorHandler("No orders found", 404));
   }
+
   MyCache.set(key, orders, 3600);
+
   return res.status(200).json({
     status: "success",
-    message: "Orders retrieved successfully",
+    message: "Orders retrieved successfully from database",
+    orders,
   });
 });
 
-export const allOrders = TryCatch(async (req, res, next) => {
+
+export const allOrder = TryCatch(async (req, res, next) => {
   const key = "all-orders";
+  let orders: any[] = [];
 
   if (MyCache.has(key)) {
-    const cachedAllorders = MyCache.get(key);
-    return res.status(200).json({
-      status: "success",
-      message: "Orders retrieved successfully",
-      cachedAllorders,
-    });
+    orders = MyCache.get(key) as any[];
+  } else {
+    orders = await Order.find().populate("user", "name");
+    MyCache.set(key, orders, 3600);
   }
 
-  const allOrders = await Order.find();
-
-  if (!allOrders || allOrders.length === 0) {
+  if (!orders || orders.length === 0) {
     return res.status(404).json({
       status: "fail",
       message: "No orders found",
     });
   }
 
-  MyCache.set(key, allOrders, 3600);
-
   return res.status(200).json({
     status: "success",
     message: "Orders retrieved successfully",
-    allOrders,
+    orders,
   });
 });
