@@ -1,5 +1,4 @@
-import  { useState } from "react";
-import Sidebar from "../components/Sidebar";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Coupon = () => {
@@ -30,8 +29,6 @@ const Coupon = () => {
   };
 
   return (
-    <div className="flex">
-
       <main className="overflow-y-auto w-full">
         <Link to="/admin/apps/Coupon">
           <h1 className="text-3xl font-semibold mx-3 my-4">Coupon</h1>
@@ -109,7 +106,6 @@ const Coupon = () => {
           </div>
         </Link>
       </main>
-    </div>
   );
 };
 

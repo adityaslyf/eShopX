@@ -1,5 +1,4 @@
 import { Column } from "react-table";
-import Sidebar from "../components/Sidebar";
 import Table from "../components/Table";
 import { ReactElement, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
@@ -224,7 +223,6 @@ const Products = () => {
 
   return (
     <div className="flex">
-
       <main className="flex-1 p-6">
         <div className="container mx-auto p-4 shadow-sm rounded-sm ">
           {table()}

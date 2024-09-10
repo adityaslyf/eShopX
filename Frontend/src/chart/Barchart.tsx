@@ -1,10 +1,8 @@
 import { BarChart } from "../components/Charts";
-import Sidebar from "../components/Sidebar";
 
 const Bar = () => {
   return (
-    <main className="flex h-screen overflow-hidden">
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-4 h-screen">
         <div className="container mx-auto">
           <span className="block text-xl font-semibold mb-4">Bar Chart</span>
           <div className="w-full bg-neutral-100 h-[70vh] mb-6 p-4 rounded-lg shadow-lg">
@@ -36,7 +34,7 @@ const Bar = () => {
           </span>
         </div>
       </div>
-    </main>
+   
   );
 };
 

@@ -1,5 +1,4 @@
 import { ReactElement, useState } from "react";
-import Sidebar from "../components/Sidebar";
 import Table from "../components/Table";
 import { Column } from "react-table";
 import { Link } from "react-router-dom";
