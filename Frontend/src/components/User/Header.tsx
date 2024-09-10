@@ -51,7 +51,7 @@ const Header = () => {
           >
             <div className="flex flex-col justify-end space-y-2 text-xl p-2">
               {user.role === "admin" && (
-                <Link to="/admin/home" onClick={() => setIsOpen(false)}>
+                <Link to="/admin" onClick={() => setIsOpen(false)}>
                   Admin
                 </Link> 
               )}
