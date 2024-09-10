@@ -31,7 +31,7 @@ const Coupon = () => {
 
   return (
     <div className="flex">
-      <Sidebar />
+
       <main className="overflow-y-auto w-full">
         <Link to="/admin/apps/Coupon">
           <h1 className="text-3xl font-semibold mx-3 my-4">Coupon</h1>

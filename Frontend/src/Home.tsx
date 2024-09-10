@@ -3,7 +3,7 @@ import Dashboard from "./pages/Dashboard";
 const Home = () => {
   return (
     <div className=" flex">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <Dashboard />
     </div>
   );

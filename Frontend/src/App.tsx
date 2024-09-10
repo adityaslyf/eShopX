@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 
-// import Loader from "./components/Loader";
-const Dashboard = lazy(() => import("./pages/Dashboard"));
+
 const Customers = lazy(() => import("./pages/Customers"));
 const Products = lazy(() => import("./pages/Products"));
 const Transaction = lazy(() => import("./pages/Transaction"));
@@ -18,7 +17,6 @@ const Pie = lazy(() => import("./chart/PieChart"));
 const Line = lazy(() => import("./chart/LineChart"));
 const Coupon = lazy(() => import("./pages/Coupon"));
 
-// user routes
 const UserHome = lazy(() => import("./pages/User/Home"));
 const Cart = lazy(() => import("./pages/User/Cart"));
 const Shipping = lazy(() => import("./pages/User/Shipping"));
@@ -32,16 +30,15 @@ const App = () => {
       {/* <Suspense fallback={<Loader />}> */}
       <Suspense>
         <Routes>
-          <Route path="/admin/home" element={<Home />} />
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/customers" element={<Customers />} />
-          <Route path="/admin/products" element={<Products />} />
-          <Route path="/admin/transaction" element={<Transaction />} />
-          <Route path="/sidebar" element={<Sidebar />} />
-          <Route path="/admin/charts/bar" element={<Bar />} />
-          <Route path="/admin/charts/pie" element={<Pie />} />
-          <Route path="/admin/charts/line" element={<Line />} />
-
+          <Route path="/admin" element={<Sidebar />}>
+            <Route index element={<Home />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="products" element={<Products />} />
+            <Route path="transaction" element={<Transaction />} />
+            <Route path="charts/bar" element={<Bar />} />
+            <Route path="charts/pie" element={<Pie />} />
+            <Route path="charts/line" element={<Line />} />
+          </Route>
           {/* management */}
           <Route path="/admin/products/new" element={<NewProduct />} />
           <Route path="/admin/products/:id" element={<ProuductEdit />} />
@@ -55,7 +52,7 @@ const App = () => {
           {/* User Routes */}
           <Route path="/" element={<UserHome />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path ="/shipping" element = {<Shipping />} />
+          <Route path="/shipping" element={<Shipping />} />
           <Route path="/login" element={<Login />} />
           <Route path="/search" element={<Search />} />
           <Route path="/user/orders" element={<Orders />} />

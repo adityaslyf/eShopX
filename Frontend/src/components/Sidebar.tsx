@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Outlet } from 'react-router-dom'
 import { MdDashboard, MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { AiFillCustomerService } from "react-icons/ai";
 import {
@@ -19,14 +20,14 @@ const Sidebar = () => {
   };
 
   return (
-    <>
+
+    <div className=" flex">
       <button className="md:hidden p-4" onClick={toggleSidebar}>
         <FaCartPlus />
       </button>
       <div
-        className={`bg-gray-700  text-white flex flex-col shadow-2xl w-fit pr-14 h-screen space-y-6 font-serif transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 transition-transform duration-300 ease-in-out md:block hidden`}
+        className={`bg-gray-700  text-white flex flex-col shadow-2xl w-fit pr-14 h-screen space-y-6 font-serif transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 transition-transform duration-300 ease-in-out md:block hidden`}
       >
         <div className="m-4">
           <FaCartPlus className="size-11" />
@@ -36,7 +37,7 @@ const Sidebar = () => {
           <div className="flex flex-col">
             <div className="font-light text-xl">DASHBOARD</div>
             <div className="flex flex-col text-lg p-4 space-y-4">
-              <Link to="/">
+              <Link to="/admin">
                 <div className="flex gap-3 items-center">
                   <MdDashboard />
                   <div>Dashboard</div>
@@ -100,7 +101,11 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-    </>
+      <div className="w-full h-screen">
+        <Outlet />
+      </div>
+    </div>
+
   );
 };
 

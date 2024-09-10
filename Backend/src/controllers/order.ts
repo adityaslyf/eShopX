@@ -38,10 +38,9 @@ export const newOrder = TryCatch(async (req, res, next) => {
   });
 });
 
-
 export const MyOrder = TryCatch(async (req, res, next) => {
   const userId = req.query.id;
-  console.log(userId)
+  console.log(userId);
 
   if (!userId) {
     return next(new ErrorHandler("User ID is required", 400));
@@ -58,7 +57,7 @@ export const MyOrder = TryCatch(async (req, res, next) => {
     });
   }
 
-  const orders = await Order.find({ user: userId }).populate("user");
+  const orders = await Order.find({ user: userId });
 
   if (!orders || orders.length === 0) {
     return next(new ErrorHandler("No orders found", 404));
@@ -72,7 +71,6 @@ export const MyOrder = TryCatch(async (req, res, next) => {
     orders,
   });
 });
-
 
 export const allOrder = TryCatch(async (req, res, next) => {
   const key = "all-orders";
@@ -96,5 +94,46 @@ export const allOrder = TryCatch(async (req, res, next) => {
     status: "success",
     message: "Orders retrieved successfully",
     orders,
+  });
+});
+
+export const getSingleOrder = TryCatch(async (req, res, next) => {
+  const { id } = req.params;
+
+  console.log(`Fetching order with ID: ${id}`); // Logging
+
+  if (!id) {
+    return next(new ErrorHandler("Order ID is required", 400));
+  }
+
+  const key = `order-${id}`;
+
+  let order;
+
+  console.log(`Checking cache for key: ${key}`); // Logging
+
+  if (MyCache.has(key)) {
+    order = MyCache.get(key);
+    console.log(`Order found in cache: ${order}`); // Logging
+  } else {
+    try {
+      order = await Order.findById(id).populate("user", "name");
+
+      if (!order) {
+        return next(new ErrorHandler("Order Not Found", 404));
+      }
+
+      console.log(`Order fetched from database: ${order}`); // Logging
+      MyCache.set(key, order);
+      console.log(`Order cached with key: ${key}`); // Logging
+    } catch (error) {
+      console.error(`Error fetching order: ${error}`); // Logging
+      return next(new ErrorHandler("An error occurred while fetching the order", 500));
+    }
+  }
+
+  return res.status(200).json({
+    success: true,
+    order,
   });
 });

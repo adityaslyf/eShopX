@@ -4,7 +4,7 @@ import { PieChart } from "../components/Charts";
 const PieChartPage = () => {
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar />
+
       <main className="flex-1 overflow-y-auto p-4">
         <div className=" text-3xl font-bold">Pie & Doughnut Charts</div>
         <div className="container mx-auto space-y-6 w-96 h-96">

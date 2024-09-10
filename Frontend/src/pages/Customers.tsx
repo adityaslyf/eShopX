@@ -84,7 +84,6 @@ const Customers = () => {
 
   return (
     <div className=" flex">
-      <Sidebar />
       <div className=" w-full p-2">{table()}</div>
     </div>
   );

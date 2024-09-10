@@ -76,7 +76,6 @@ const Transaction = () => {
 
   return (
     <div className=" flex">
-      <Sidebar />
       <div className=" w-full p-3">{table()}</div>
     </div>
   );
