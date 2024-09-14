@@ -5,10 +5,9 @@ const Login = () => {
   const [gender, setGender] = useState('');
   const [dob, setDob] = useState('');
 
-  const handleGoogleLogin = () => {
-    // Handle Google login logic here
-    console.log('Google login clicked');
-  };
+const loginHandler = async () => {
+  console.log("login btn clicked");
+};
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">
@@ -39,7 +38,7 @@ const Login = () => {
           </div>
           <button
             type="button"
-            onClick={handleGoogleLogin}
+            onClick={loginHandler}
             className="w-full bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 text-white py-3 rounded-lg flex items-center justify-center text-lg font-semibold hover:from-yellow-500 hover:to-pink-600 transition duration-300"
           >
             <FaGoogle className="mr-2 text-2xl" /> Login with Google

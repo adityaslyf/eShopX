@@ -16,11 +16,11 @@ interface IUser extends Document {
 }
 
 const userSchema: Schema<IUser> = new mongoose.Schema(
-  {
-    _id: {
-      type: Schema.Types.ObjectId,
-      required: [true, "Please enter ID"],
-    },
+    {
+      _id: {
+        type: Schema.Types.ObjectId,
+        required: [true, "Please enter ID"],
+      },
     name: {
       type: Schema.Types.String,
       required: [true, "Name is required"],

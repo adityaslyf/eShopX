@@ -39,6 +39,9 @@ const App = () => {
             <Route path="charts/pie" element={<Pie />} />
             <Route path="charts/line" element={<Line />} />
           </Route>
+          <Route path="/admin/apps/Coupon" element={<Coupon />} />
+
+
           {/* management */}
           <Route path="/admin/products/new" element={<NewProduct />} />
           <Route path="/admin/products/:id" element={<ProuductEdit />} />
@@ -46,9 +49,7 @@ const App = () => {
             path="/admin/transaction/:id"
             element={<TransactionManagement />}
           />
-          {/* Apps */}
-          <Route path="/admin/apps/Coupon" element={<Coupon />} />
-
+      
           {/* User Routes */}
           <Route path="/" element={<UserHome />} />
           <Route path="/cart" element={<Cart />} />

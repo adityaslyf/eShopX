@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import { errorMiddleware } from "./middleware/error.js";
 import productRoute from "./routes/products.js";
 import NodeCache from "node-cache";
-import cors from "cors"; // Import CORS middleware
+import cors from "cors"; 
 import orderRoute from './routes/order.js'
 import { config } from "dotenv";
 import morgon from "morgan";
@@ -18,7 +18,7 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 const mongoURI = process.env.MONGO_URI || "";
-// Connect to the database
+
 connectDB(mongoURI);
 
 // Initialize cache
@@ -47,7 +47,6 @@ app.get("/", (req, res) => {
 // Use error handling middleware
 app.use(errorMiddleware);
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

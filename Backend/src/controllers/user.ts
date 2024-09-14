@@ -4,7 +4,7 @@ import { NewUserRequestBody } from "../types/types.js";
 import ErrorHandler from "../utils/utility-class.js";
 import { TryCatch } from "../middleware/error.js";
 
-export const newUser = TryCatch(
+export const  newUser = TryCatch(
   async (
     req: Request<{}, {}, NewUserRequestBody>,
     res: Response,
@@ -28,7 +28,7 @@ export const newUser = TryCatch(
       return next(new ErrorHandler("Missing required fields", 400));
     }
     try {
-      const user = await User.create({
+      const user = await User .create({
         name,
         email,
         photo,

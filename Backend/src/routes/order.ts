@@ -5,7 +5,7 @@ import { allOrder, getSingleOrder, MyOrder, newOrder ,  } from "../controllers/o
 const app = express.Router();
 
 app.post("/new" , newOrder);
-app.get("/my" , MyOrder);
+app.get("/my" , MyOrder);   
 app.get("/all",   allOrder);
 app.route('/:id').get(getSingleOrder)
 
