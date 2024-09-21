@@ -1,13 +1,29 @@
 import { useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
+import { auth } from '../../firebase'; // adjust the path as needed
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const [gender, setGender] = useState('');
   const [dob, setDob] = useState('');
+  const navigate = useNavigate();
 
-const loginHandler = async () => {
-  console.log("login btn clicked");
-};
+  const loginHandler = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log('User signed in:', user);
+      toast.success('Login successful');
+      // Handle successful login (e.g., redirect, store user info)
+      navigate('/admin');
+    } catch (error) {
+      toast.error('Login failed');
+      // Handle errors here
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500">

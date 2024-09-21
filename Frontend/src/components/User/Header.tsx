@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const user = {
-  _id: "123",
+  _id: "",
   role: "admin",
 };
 
