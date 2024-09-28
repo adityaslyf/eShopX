@@ -1,18 +1,19 @@
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import { server } from "../store";
-// import { MessageResponse } from "../../types/api-types";
-// import { User } from "../../types/types";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// export const userApi = createApi({
-//   reducerPath: "userApi",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: `${server}/api/v1/user`,
-//   }),
-//   endpoints: (builder) => ({
-//     login: builder.mutation<MessageResponse , User >({
-//       query: (user) => ({ url: "new", method: "POST", body: user }),
-//     }),
-//   }),
-// });
+import { MessageResponse } from "../../types/api-types";
+import { User } from "../../types/types";
 
-// export const { useLoginMutation } = userApi;
+export const userApi = createApi({
+  reducerPath: "userApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1/user`,
+  }),
+
+  endpoints: (builder) => ({
+    login: builder.mutation<MessageResponse, User>({
+      query: (user) => ({ url: "new", method: "POST", body: user }),
+    }),
+  }),
+});
+
+export const { useLoginMutation } = userApi;

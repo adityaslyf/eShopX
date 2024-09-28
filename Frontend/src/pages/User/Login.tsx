@@ -4,24 +4,49 @@ import { auth } from '../../firebase'; // adjust the path as needed
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useLoginMutation } from '../../redux/api/UserApi';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { MessageResponse } from '../../types/api-types';
 
 const Login = () => {
   const [gender, setGender] = useState('');
   const [dob, setDob] = useState('');
   const navigate = useNavigate();
+  const [login] = useLoginMutation();
+
 
   const loginHandler = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
+      const res = await login({
+        email: "abc",
+        name: "aditya",
+        photo: "https://www.google.com",
+        gender: "male",
+        role: 'user',
+        dob: dob,
+        _id: "XXX"
+      });
+
+      if ("data" in res) {
+        toast.success(res.data.message);
+        console.log(res.data);
+      }
+      else {
+        const error = res.error as FetchBaseQueryError
+        const message = error.data as MessageResponse;
+        toast.error(message.message);
+      }
+
       console.log('User signed in:', user);
       toast.success('Login successful');
-      // Handle successful login (e.g., redirect, store user info)
       navigate('/admin');
-    } catch (error) {
+    }
+    catch (error) {
       toast.error('Login failed');
-      // Handle errors here
     }
   };
 
