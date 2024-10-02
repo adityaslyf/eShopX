@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import { auth } from '../../firebase'; // adjust the path as needed
+import { auth } from '../../firebase'; 
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -14,26 +14,31 @@ const Login = () => {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
 
-
   const loginHandler = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
+      if (!user.email) {
+        toast.error('Please use a valid email to login');
+        return;
+      }
+
       const res = await login({
-        email: "abc",
-        name: "aditya",
-        photo: "https://www.google.com",
-        gender: "male",
+        email: user.email,
+        name: user.displayName || '',
+        photo: user.photoURL || '',
+        gender,
         role: 'user',
         dob: dob,
-        _id: "XXX"
+        _id: user.uid,
       });
 
-      if ("data" in res) {
+      if ("data" in res && res.data) {
         toast.success(res.data.message);
         console.log(res.data);
+        navigate('/admin');
       }
       else {
         const error = res.error as FetchBaseQueryError
@@ -42,8 +47,6 @@ const Login = () => {
       }
 
       console.log('User signed in:', user);
-      toast.success('Login successful');
-      navigate('/admin');
     }
     catch (error) {
       toast.error('Login failed');
