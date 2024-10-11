@@ -2,12 +2,12 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 import validator from "validator";
 
 interface IUser extends Document {
-  
+  _id: string;
   name: string;
   photo: string;
   role: "admin" | "user";
   email: string;
-  gender: "male" | "female";
+  gender: string;
   dob: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -18,7 +18,7 @@ interface IUser extends Document {
 const userSchema: Schema<IUser> = new mongoose.Schema(
     {
       _id: {
-        type: Schema.Types.ObjectId,
+        type: String,
         required: [true, "Please enter ID"],
       },
     name: {
@@ -45,7 +45,6 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female"],
       required: [true, "Please provide your genders"],
     },
     dob: {
