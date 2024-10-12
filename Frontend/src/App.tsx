@@ -1,6 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { Suspense, lazy, useEffect } from "react";
 import {Toaster} from 'react-hot-toast';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { useDispatch } from "react-redux";
+import { userDoesNotExist, userExists } from "./redux/reducer/UserReducer";
+import { getUser } from "./redux/api/UserApi";
 
 
 const Customers = lazy(() => import("./pages/Customers"));
@@ -26,6 +31,21 @@ const Search = lazy(() => import("./pages/User/Search"));
 const Orders = lazy(() => import("./pages/User/Orders"));
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+       const data = await getUser(user.uid);
+       if(data?.user){
+        dispatch(userExists(data.user))
+       }
+      } else {
+      dispatch(userDoesNotExist())
+      }
+    });
+  }, []);
+
   return (
     <Router>
       {/* <Suspense fallback={<Loader />}> */}
@@ -50,7 +70,7 @@ const App = () => {
             path="/admin/transaction/:id"
             element={<TransactionManagement />}
           />
-      
+
           {/* User Routes */}
           <Route path="/" element={<UserHome />} />
           <Route path="/cart" element={<Cart />} />

@@ -6,12 +6,6 @@ import Footer from "../../components/User/Footer";
 import { motion } from "framer-motion";
 
 
-const brandLogos = [
-  "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", // Updated Apple logo URL
-  "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
-  "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg", // Updated Google logo URL
-];
 
 const images = [
   "https://images.unsplash.com/photo-1607082349566-187342175e2f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80", // Dark e-commerce concept with shopping cart
@@ -69,23 +63,6 @@ const products = [
   },
 ];
 
-const testimonials = [
-  {
-    quote: "This is the best online shopping experience I've ever had!",
-    name: "Aditya",
-    position: "CEO of Company",
-  },
-  {
-    quote: "Amazing products and great customer service!",
-    name: "Shubham",
-    position: "Marketing Manager",
-  },
-  {
-    quote: "I love the variety and quality of the products.",
-    name: "Pratham",
-    position: "Product Designer",
-  },
-];
 
 const Home = () => {
   return (
@@ -189,69 +166,6 @@ const Home = () => {
               />
             </motion.div>
           ))}
-        </section>
-
-        {/* Testimonials Section */}
-        <section className=" py-8 rounded-md  mb-12">
-          <h2 className="text-3xl font-bold text-center mb-6">What Our Customers Say</h2>
-          <div className="flex flex-col space-y-7 md:space-y-0 md:flex-row justify-center space-x-6">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                className="max-w-xs bg-gray-700 p-6 rounded-md shadow-md"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
-                <p className="italic">"{testimonial.quote}"</p>
-                <p className="font-bold mt-4">- {testimonial.name}</p>
-                <p className="text-sm text-gray-400">{testimonial.position}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-       
-
-        {/* Brand Logos Section */}
-        <section className="py-8 mb-12">
-          <h2 className="text-3xl font-bold text-center mb-6">Our Partners</h2>
-          <div className="flex  flex-col space-y-2 md:flex-row  justify-center space-x-8">
-            {brandLogos.map((logo, index) => (
-              <motion.img
-                key={index}
-                src={logo}
-                alt={`Partner ${index + 1}`}
-                className="h-16"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              />
-            ))}
-          </div>
-
-        </section>
-         {/* Newsletter Signup Section */}
-         <section className=" py-8 rounded-md  mb-12">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">Stay Updated!</h2>
-            <p className="text-lg mb-6">Sign up for our newsletter to get the latest news and special offers.</p>
-            <div className="flex justify-center">
-              <motion.input
-                type="email"
-                placeholder="Enter your email"
-                className="p-2 rounded-l-md text-gray-900 focus:outline-none"
-                whileFocus={{ scale: 1.05 }}
-              />
-              <motion.button
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-r-md transition duration-300 ease-in-out"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Subscribe
-              </motion.button>
-            </div>
-          </div>
         </section>
       </main>
       <Footer />

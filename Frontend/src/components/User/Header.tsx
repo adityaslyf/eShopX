@@ -66,7 +66,7 @@ const Header = () => {
         </div>
       ) : (
         <Link to="/login">
-          <IoLogIn />
+          <IoLogIn  size={28} />
         </Link>
       )}
     </nav>

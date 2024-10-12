@@ -2,7 +2,7 @@
 import Dashboard from "./pages/Dashboard";
 const Home = () => {
   return (
-    <div className=" flex">
+    <div className=" flex"> 
       <Dashboard />
     </div>
   );
