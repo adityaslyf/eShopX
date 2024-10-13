@@ -8,13 +8,12 @@ import {
 import { IoLogIn } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { User } from "../../types/types";
 
-const user = {
-  _id: "",
-  role: "admin",
-};
-
-const Header = () => {
+interface PropsType {
+  user: User | null;
+}
+const Header = ({ user }: PropsType) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const logout = () => {
     setIsOpen(false);
@@ -36,7 +35,7 @@ const Header = () => {
       <Link to="/cart">
         <FaShoppingBag size={24} />
       </Link>
-      {user._id ? (
+      {user?._id ? (
         <div className="relative">
           <button
             onClick={() => {
@@ -53,7 +52,7 @@ const Header = () => {
               {user.role === "admin" && (
                 <Link to="/admin" onClick={() => setIsOpen(false)}>
                   Admin
-                </Link> 
+                </Link>
               )}
               <Link to="/user/orders" onClick={() => setIsOpen(false)}>
                 Orders
@@ -66,7 +65,7 @@ const Header = () => {
         </div>
       ) : (
         <Link to="/login">
-          <IoLogIn  size={28} />
+          <IoLogIn size={28} />
         </Link>
       )}
     </nav>

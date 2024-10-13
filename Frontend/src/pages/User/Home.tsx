@@ -5,6 +5,13 @@ import ProductCard from "../../components/User/ProductCard";
 import Footer from "../../components/User/Footer";
 import { motion } from "framer-motion";
 
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { userDoesNotExist, userExists } from "../../redux/reducer/UserReducer";
+import { getUser } from "../../redux/api/UserApi";
+import { useEffect} from "react";
+import { UserReducerInitialState } from "../../types/reducer-types";
 
 
 const images = [
@@ -64,10 +71,31 @@ const products = [
 ];
 
 
+
 const Home = () => {
+  const { user} = useSelector(
+    (state: {userReducer: UserReducerInitialState}) => state.userReducer
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const data = await getUser(user.uid);
+        if(data){
+          dispatch(userExists(data));
+        }
+       
+      } else dispatch(userDoesNotExist  ());
+    });
+  }, []);
+
+
+
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
-      <Header />
+      <Header user={user} />
       <main className="px-8 py-4">
         <div className="flex items-center space-x-4 mb-6">
           <div className="bg-purple-500 w-1 h-10"></div>

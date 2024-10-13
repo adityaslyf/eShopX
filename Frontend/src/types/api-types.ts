@@ -6,5 +6,5 @@ export type MessageResponse = {
 
 export type UserResponse = {
   success: boolean;
-  user: User;
+  user?: User;
 };
