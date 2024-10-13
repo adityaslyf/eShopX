@@ -1,8 +1,17 @@
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import { Suspense, lazy} from "react";
-import {Toaster} from 'react-hot-toast';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { Toaster } from 'react-hot-toast';
+import Header from "./components/User/Header";
 
 
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { userDoesNotExist, userExists } from "./redux/reducer/UserReducer";
+import { getUser } from "./redux/api/UserApi";
+import { useEffect } from "react";
+import { UserReducerInitialState } from "./types/reducer-types";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const Customers = lazy(() => import("./pages/Customers"));
 const Products = lazy(() => import("./pages/Products"));
@@ -26,12 +35,33 @@ const Login = lazy(() => import("./pages/User/Login"));
 const Search = lazy(() => import("./pages/User/Search"));
 const Orders = lazy(() => import("./pages/User/Orders"));
 
+
 const App = () => {
+  const { user, loading } = useSelector(
+    (state: { userReducer: UserReducerInitialState }) => state.userReducer
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const data = await getUser(user.uid);
+        if (data) {
+          dispatch(userExists(data));
+        }
+
+      } else dispatch(userDoesNotExist());
+    });
+  }, []);
+
+  if (loading) {
+    return <h1>Loading...</h1>
+  }
 
 
   return (
     <Router>
-      {/* <Suspense fallback={<Loader />}> */}
       <Suspense>
         <Routes>
           <Route path="/admin" element={<Sidebar />}>
@@ -55,13 +85,27 @@ const App = () => {
           />
 
           {/* User Routes */}
-          <Route path="/" element={<UserHome />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/shipping" element={<Shipping />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/user/orders" element={<Orders />} />
 
+
+          <Route path="/login" element={<ProtectedRoute isAuthenticated={user ? false : true}>
+            <Login />
+          </ProtectedRoute>
+          }
+          />
+          <Route path="/" element={
+            <>
+              <Header user={user} />
+              <UserHome />
+            </>
+          } />
+          <Route element={<ProtectedRoute isAuthenticated={user ? true : false} />}>
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/user/orders" element={<Orders />} />
+          </Route>
+
+
+          <Route path="/search" element={<Search />} />
         </Routes>
       </Suspense>
       <Toaster position="bottom-center" />

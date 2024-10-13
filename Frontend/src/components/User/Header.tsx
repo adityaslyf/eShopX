@@ -20,7 +20,7 @@ const Header = ({ user }: PropsType) => {
   };
 
   return (
-    <nav className="flex justify-end p-4 space-x-8 rounded-sm static w-full">
+    <nav className="flex justify-end p-4 space-x-8 rounded-sm static w-full bg-gray-900 text-white">
       <Link to="/">
         <FaHome size={26} onClick={() => setIsOpen(false)} />
       </Link>
