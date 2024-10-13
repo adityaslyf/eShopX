@@ -28,7 +28,7 @@ export const  newUser = TryCatch(
       return next(new ErrorHandler("Missing required fields", 400));
     }
     try {
-      const user = await User .create({
+      const user = await User.create({
         name,
         email,
         photo,
@@ -60,6 +60,7 @@ export const getAllUsers = TryCatch(
   }
 );
 
+
 export const getUser = TryCatch(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -77,6 +78,7 @@ export const getUser = TryCatch(
 export const deleteUser = TryCatch(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log(`Deleting user with ID: ${req.params.id}`); // Log the ID being deleted
       const user = await User.findByIdAndDelete(req.params.id);
       if (!user) {
         return next(new ErrorHandler("User not found", 404));
@@ -85,6 +87,7 @@ export const deleteUser = TryCatch(
         message: "User deleted successfully",
       });
     } catch (error) {
+      console.error(`Error deleting user: ${error}`); // Log any errors
       next(error);
     }
   }
