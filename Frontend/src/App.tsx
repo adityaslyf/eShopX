@@ -64,26 +64,29 @@ const App = () => {
     <Router>
       <Suspense>
         <Routes>
-          <Route path="/admin" element={<Sidebar />}>
-            <Route index element={<Home />} />
-            <Route path="customers" element={<Customers />} />
-            <Route path="products" element={<Products />} />
-            <Route path="transaction" element={<Transaction />} />
-            <Route path="charts/bar" element={<Bar />} />
-            <Route path="charts/pie" element={<Pie />} />
-            <Route path="charts/line" element={<Line />} />
+          <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} />} >
+            <Route path="/admin" element={<Sidebar />}>
+              <Route index element={<Home />} />
+              <Route path="customers" element={<Customers />} />
+              <Route path="products" element={<Products />} />
+              <Route path="transaction" element={<Transaction />} />
+              <Route path="charts/bar" element={<Bar />} />
+              <Route path="charts/pie" element={<Pie />} />
+              <Route path="charts/line" element={<Line />} />
+            </Route>
+            <Route path="/admin/apps/Coupon" element={<Coupon />} />
+
+
+
+
+            {/* management */}
+            <Route path="/admin/products/new" element={<NewProduct />} />
+            <Route path="/admin/products/:id" element={<ProuductEdit />} />
+            <Route
+              path="/admin/transaction/:id"
+              element={<TransactionManagement />}
+            />
           </Route>
-          <Route path="/admin/apps/Coupon" element={<Coupon />} />
-
-
-          {/* management */}
-          <Route path="/admin/products/new" element={<NewProduct />} />
-          <Route path="/admin/products/:id" element={<ProuductEdit />} />
-          <Route
-            path="/admin/transaction/:id"
-            element={<TransactionManagement />}
-          />
-
           {/* User Routes */}
 
 
