@@ -64,7 +64,7 @@ const App = () => {
     <Router>
       <Suspense>
         <Routes>
-          <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} />} >
+          <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role == "admin" ? true : false} />} >
             <Route path="/admin" element={<Sidebar />}>
               <Route index element={<Home />} />
               <Route path="customers" element={<Customers />} />

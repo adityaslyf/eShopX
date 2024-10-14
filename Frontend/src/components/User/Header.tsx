@@ -9,14 +9,22 @@ import { IoLogIn } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { User } from "../../types/types";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+import toast from "react-hot-toast";
 
 interface PropsType {
   user: User | null;
 }
 const Header = ({ user }: PropsType) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const logout = () => {
-    setIsOpen(false);
+  const loginHandler = async () => {
+    try {
+      await signOut(auth);
+      toast.success("Logged out successfully")
+    } catch (error) {
+      toast.error("Error in logging out");
+    }
   };
 
   return (
@@ -57,7 +65,7 @@ const Header = ({ user }: PropsType) => {
               <Link to="/user/orders" onClick={() => setIsOpen(false)}>
                 Orders
               </Link>
-              <button onClick={logout}>
+              <button onClick={loginHandler}>
                 <FaSignOutAlt />
               </button>
             </div>
