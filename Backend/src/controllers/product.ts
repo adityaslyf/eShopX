@@ -42,7 +42,6 @@
         // Invalidate related caches
         invalidateCache("latestProducts");
         invalidateCache("categories");
-
         return res.status(201).json({
           success: true,
           message: "Product created successfully",

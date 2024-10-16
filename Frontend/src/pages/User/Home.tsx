@@ -4,7 +4,8 @@ import Carousel from "../../components/User/Carousel";
 import ProductCard from "../../components/User/ProductCard";
 import Footer from "../../components/User/Footer";
 import { motion } from "framer-motion";
-
+import { useLatestProductsQuery } from "../../redux/api/ProductApi";
+import Skeleton from "../../components/Skeleton/index";
 
 
 
@@ -31,46 +32,14 @@ const categories = [
   "Fitness",
 ];
 
-const products = [
-  {
-    name: "Product 1",
-    price: "$10",
-    rating: "4.5",
-    imageUrl: "https://m.media-amazon.com/images/I/71jG+e7roXL._AC_UY218_.jpg",
-  },
-  {
-    name: "Product 2",
-    price: "$20",
-    rating: "4.0",
-    imageUrl: "https://m.media-amazon.com/images/I/812yohjGZ2L._AC_UY218_.jpg",
-  },
-  {
-    name: "Product 3",
-    price: "$30",
-    rating: "5.0",
-    imageUrl: "https://m.media-amazon.com/images/I/71A68Sti-4L._AC_UY218_.jpg",
-  },
-  {
-    name: "Product 4",
-    price: "$40",
-    rating: "4.8",
-    imageUrl: "https://m.media-amazon.com/images/I/813BY8cbW8L._AC_UY218_.jpg",
-  },
-  {
-    name: "Product 5",
-    price: "$50",
-    rating: "4.7",
-    imageUrl: "https://m.media-amazon.com/images/I/7159GCFgGiL._AC_UY218_.jpg",
-  },
-];
-
-
 
 const Home = () => {
 
+  const { data, isLoading } = useLatestProductsQuery("")
+
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
-     
+
       <main className="px-8 py-4">
         <div className="flex items-center space-x-4 mb-6">
           <div className="bg-purple-500 w-1 h-10"></div>
@@ -154,21 +123,30 @@ const Home = () => {
             More
           </Link>
         </div>
+
         <section className="flex gap-6 justify-center flex-wrap mb-12">
-          {products.map((product, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ProductCard
-                name={product.name}
-                price={product.price}
-                rating={product.rating}
-                imageUrl={product.imageUrl}
-              />
-            </motion.div>
-          ))}
+          {isLoading ? (
+            <Skeleton />
+          )
+            :
+            (
+              data?.products?.map((i) => (
+                <motion.div
+                  key={i._id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ProductCard
+                    ProductId={i._id}
+                    name={i.name}
+                    price={i.price}
+                    stock={i.stock}
+                    photo={i.photo}
+                    category={i.category}
+                  />
+                </motion.div>
+              )
+              ))}
         </section>
       </main>
       <Footer />

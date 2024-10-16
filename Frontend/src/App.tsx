@@ -12,6 +12,7 @@ import { getUser } from "./redux/api/UserApi";
 import { useEffect } from "react";
 import { UserReducerInitialState } from "./types/reducer-types";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Loader from "./components/Loader";
 
 const Customers = lazy(() => import("./pages/Customers"));
 const Products = lazy(() => import("./pages/Products"));
@@ -56,7 +57,7 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <h1>Loading...</h1>
+    return <h1><Loader /></h1>
   }
 
 
@@ -75,9 +76,6 @@ const App = () => {
               <Route path="charts/line" element={<Line />} />
             </Route>
             <Route path="/admin/apps/Coupon" element={<Coupon />} />
-
-
-
 
             {/* management */}
             <Route path="/admin/products/new" element={<NewProduct />} />
