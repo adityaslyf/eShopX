@@ -4,35 +4,36 @@ import ProductCard from "../../components/User/ProductCard";
 const products = [
   {
     name: "Product 1",
-    price: "$10",
-    rating: "4.5",
+    price: 10,
+    stock: 5,  // Replacing rating with stock
     imageUrl: "https://m.media-amazon.com/images/I/71jG+e7roXL._AC_UY218_.jpg",
   },
   {
     name: "Product 2",
-    price: "$20",
-    rating: "4.0",
+    price: 20,
+    stock: 3,  // Replacing rating with stock
     imageUrl: "https://m.media-amazon.com/images/I/812yohjGZ2L._AC_UY218_.jpg",
   },
   {
     name: "Product 3",
-    price: "$30",
-    rating: "5.0",
+    price: 30,
+    stock: 10,  // Replacing rating with stock
     imageUrl: "https://m.media-amazon.com/images/I/71A68Sti-4L._AC_UY218_.jpg",
   },
   {
     name: "Product 4",
-    price: "$40",
-    rating: "4.8",
+    price: 40,
+    stock: 0,  // Replacing rating with stock
     imageUrl: "https://m.media-amazon.com/images/I/813BY8cbW8L._AC_UY218_.jpg",
   },
   {
     name: "Product 5",
-    price: "$50",
-    rating: "4.7",
+    price: 50,
+    stock: 7,  // Replacing rating with stock
     imageUrl: "https://m.media-amazon.com/images/I/7159GCFgGiL._AC_UY218_.jpg",
   },
 ];
+
 
 const Search = () => {
   const [search, setSearch] = useState("");
@@ -101,11 +102,14 @@ const Search = () => {
               key={index}
               name={product.name}
               price={product.price}
-              rating={product.rating}
-              imageUrl={product.imageUrl}
+              stock={product.stock}  // Passing stock value
+              photo={product.imageUrl}
+              category="Electronics"
+               ProductId={`product-${index}`}
             />
           ))}
         </div>
+
         <article className="flex justify-center mt-12 space-x-5">
           <button
             onClick={() => {
@@ -132,6 +136,6 @@ const Search = () => {
       </main>
     </div>
   );
-};  
+};
 
 export default Search;

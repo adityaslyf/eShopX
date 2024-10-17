@@ -36,7 +36,6 @@ function Table<T extends Object>(
       canPreviousPage,
       pageCount,
       state: { pageIndex },
-      // gotoPage,
     } = useTable(options, useSortBy, usePagination);
 
     return (
@@ -47,17 +46,17 @@ function Table<T extends Object>(
           {...getTableProps()}
         >
           <thead className="bg-gray-200">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-                {headerGroup.headers.map((column) => (
+            {headerGroups.map((headerGroup, headerGroupIndex) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroupIndex}>
+                {headerGroup.headers.map((column, columnIndex) => (
                   <th
                     className="px-2 py-2 border border-gray-300 text-left"
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    key={column.id}
+                    key={`${column.id}-${columnIndex}`}
                   >
                     {column.render("Header")}
                     {column.isSorted && (
-                      <span className=" flex">
+                      <span className="flex">
                         {column.isSortedDesc ? (
                           <GiBoomerang />
                         ) : (
@@ -71,19 +70,19 @@ function Table<T extends Object>(
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row, rowIndex) => {
               prepareRow(row);
               return (
                 <tr
                   className="hover:bg-gray-100"
                   {...row.getRowProps()}
-                  key={row.id}
+                  key={rowIndex}
                 >
-                  {row.cells.map((cell) => (
+                  {row.cells.map((cell, cellIndex) => (
                     <td
                       className="px-2 py-5 border border-gray-300 text-left"
                       {...cell.getCellProps()}
-                      key={cell.column.id}
+                      key={`${rowIndex}-${cell.column.id}-${cellIndex}`}
                     >
                       {cell.render("Cell")}
                     </td>
@@ -94,39 +93,22 @@ function Table<T extends Object>(
           </tbody>
         </table>
         {showPagination && (
-          <div className=" flex justify-center space-x-7 mt-8">
-           
+          <div className="flex justify-center space-x-7 mt-8">
             <button
               disabled={!canNextPage}
               onClick={nextPage}
-              className=" rounded-md bg-blue-600 p-2 m-3 hover:bg-green-600"
+              className="rounded-md bg-blue-600 p-2 m-3 hover:bg-green-600"
             >
               Next
             </button>
-            <span className=" mt-5">{`${pageIndex + 1} Page of ${pageCount}`}</span>
+            <span className="mt-5">{`${pageIndex + 1} Page of ${pageCount}`}</span>
             <button
               disabled={!canPreviousPage}
               onClick={previousPage}
-              className=" rounded-md bg-blue-600 p-2 m-3 hover:bg-green-600"
+              className="rounded-md bg-blue-600 p-2 m-3 hover:bg-green-600"
             >
               Previous
             </button>
-            {/* <button
-              onClick={() => {
-                gotoPage(0);
-              }}
-              className="rounded-sm bg-blue-600 p-2  m-3"
-            >
-              1st page
-            </button> */}
-            {/* <button
-              onClick={() => {
-                gotoPage(pageCount - 1);
-              }}
-              className="rounded-sm bg-blue-600 p-2  m-3"
-            >
-              last page
-            </button> */}
           </div>
         )}
       </div>

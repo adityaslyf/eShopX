@@ -7,10 +7,19 @@ export type MessageResponse = {
 export type UserResponse = {
   success: boolean;
   user?: User;
+  message?: string;
 };  
 
 export type ProductResponse = {
   success: boolean;
   products?: Product[];
 };
+
+export type CustomError = {
+  statusCode: number;
+  data: {
+    message: string;
+    success: boolean;
+  };
+  }
 

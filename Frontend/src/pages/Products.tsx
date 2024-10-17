@@ -1,9 +1,13 @@
 import { Column } from "react-table";
 import Table from "../components/Table";
-import { ReactElement, useCallback, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "../styles/product.css";
+import { useAllProductsQuery } from "../redux/api/ProductApi";
+import { server } from "../redux/store";
+import toast from "react-hot-toast";
+import { CustomError } from "../types/api-types";
 
 interface DataType {
   photo: ReactElement;
@@ -36,204 +40,42 @@ const columns: Column<DataType>[] = [
   },
 ];
 
-const img =
-  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvZXN8ZW58MHx8MHx8&w=1000&q=804";
-const img2 = "https://m.media-amazon.com/images/I/514T0SvwkHL._SL1500_.jpg";
-
-const arr: DataType[] = [
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/products/:id" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
-
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
-
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: <img src={img} alt="Shoes" className="w-20 h-20 object-cover" />,
-    name: "Puma Shoes Air Jordan 2023",
-    price: 690,
-    stock: 3,
-    action: (
-      <Link to="/admin/product/sajknaskd" className="text-blue-500 underline">
-        Manage
-      </Link>
-    ),
-  },
-  {
-    photo: (
-      <img src={img2} alt="Shoes" className="w-20 h-20 object-cover p-2" />
-    ),
-    name: "Macbook",
-    price: 232223,
-    stock: 213,
-    action: (
-      <Link
-        to="/admin/product/sdaskdnkasjdn"
-        className="text-blue-500 underline"
-      >
-        Manage
-      </Link>
-    ),
-  },
-];
-
 const Products = () => {
-  const [data] = useState<DataType[]>(arr);
+  const [rows, setRows] = useState<DataType[]>([]);
+  const {  isError, error, data } = useAllProductsQuery("");
 
-  const table = useCallback(
-    Table<DataType>(
-      columns,
-      data,
-      "product-container mx-auto p-4",
-      "Products",
-      true
-    ),
-    [data]
-  );
+  if (isError) {
+    toast.error((error as CustomError).data.message);
+  }
+
+  useEffect(() => {
+    if (data && data.products) {
+      setRows(
+        data.products.map((i) => ({
+          photo: <img src={`${server}/${i.photo}`} alt="Shoes" className="w-20 h-20 object-cover" />,
+          name: i.name,
+          price: i.price,
+          stock: i.stock,
+          action: <Link to={`/admin/products/${i._id}`} className="text-blue-500 underline">Manage</Link>,
+        }))
+      );
+    } else {
+      setRows([]); // Set an empty array when data is undefined or products is not available
+    }
+  }, [data]);
+
+  // Render the Table HOC directly without useCallback
+  const ProductTable = Table<DataType>(columns, rows, "product-container mx-auto p-4", "Products", true);
 
   return (
     <div className="flex">
       <main className="flex-1 p-6">
         <div className="container mx-auto p-4 shadow-sm rounded-sm ">
-          {table()}
+          <ProductTable />
         </div>
       </main>
       <Link to="/admin/products/new">
-        <FaPlus
-          color="white"
-          size={35}
-          className="  bg-green-500 rounded-full m-6 border b"
-        />
+        <FaPlus color="white" size={35} className="bg-green-500 rounded-full m-6 border" />
       </Link>
     </div>
   );
