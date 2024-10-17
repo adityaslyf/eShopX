@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
+    "module": "NodeNext",                    // NodeNext is fine for ESM modules in Node.js
     "rootDir": "src",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "NodeNext",          // For resolving modules in Node.js
     "outDir": "dist",
-    "esModuleInterop": true,
+    "esModuleInterop": true,                 // For interoperability with commonjs modules
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"]                        // Ensures that Node.js types like fs, process are recognized
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
