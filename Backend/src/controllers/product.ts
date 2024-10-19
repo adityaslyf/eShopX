@@ -235,78 +235,57 @@
   );
 
   // Get all products for search
-  export const getAllProducts = TryCatch(
-    async (req: Request<{}, {}, {}, SearchRequestQuery>, res, next) => {
-      const { search, price, category, sort, page, productName } = req.query;
-      const pageNumber = Number(page) || 1;
-      const limit = Number(process.env.PRODUCT_PER_PAGE) || 8;
-  
-      let query: BaseQuery = {}; // Initialize query as an empty object
-  
-      // Filter by search keyword (name and category)
-      if (search) {
-        query.$or = [
-          { name: { $regex: search, $options: "i" } },
-          { category: { $regex: search, $options: "i" } },
-        ];
-      }
-  
-      // Filter by product name
-      if (productName) {
-        query.name = { $regex: productName, $options: "i" }; // Case-insensitive search for name
-      }
-  
-      // Filter by category
-      if (category) {
-        query.category = category;
-      }
-  
-      // Filter by price range or exact value
-      if (price) {
-        const priceRange = price.split("-");
-        if (priceRange.length === 2) {
-          query.price = {
-            $gte: Number(priceRange[0]),
-            $lte: Number(priceRange[1]),
-          };
-        } else if (priceRange.length === 1) {
-          query.price = {
-            $gte: Number(priceRange[0]),
-            $lte: Number(priceRange[0]),
-          };
-        }
-      }
-  
-      // Sorting
-      let sortOptions: SortOptions = { createdAt: -1 }; // Default sorting by createdAt descending
-      if (sort === "price") {
-        sortOptions = { price: 1 }; // Sort by price ascending
-      } else if (sort === "-price") {
-        sortOptions = { price: -1 }; // Sort by price descending
-      }
-  
-      try {
-        // Execute the query
-        const products = await Product.find(query)
-          .sort(sortOptions)
-          .skip((pageNumber - 1) * limit)
-          .limit(limit);
-  
-        // Calculate total pages
-        const totalItems = await Product.countDocuments(query);
-        const totalPages = Math.ceil(totalItems / limit);
-  
-        // Generate array of page numbers
-        const pagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
-  
-        return res.status(200).json({
-          success: true,
-          products,
-          totalPages,
-          pagesArray,
-        });
-      } catch (error) {
-        next(error);
-      }
+// Get all products for search
+export const getAllProducts = TryCatch(
+  async (req: Request<{}, {}, {}, SearchRequestQuery>, res, next) => {
+    const { search, price, category, sort, page } = req.query;
+    const pageNumber = Number(page) || 1;
+    const limit = Number(process.env.PRODUCT_PER_PAGE) || 8;
+
+    let query: BaseQuery = {};
+
+    // Filter by search keyword (name and category)
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { category: { $regex: search, $options: "i" } },
+      ];
     }
-  );
+
+    // Filter by category
+    if (category && category !== "none") {
+      query.category = category;
+    }
+
+    // Filter by price range
+    if (price) {
+      query.price = { $lte: Number(price) };
+    }
+
+    // Sorting
+    let sortOptions: SortOptions = { createdAt: -1 };
+    if (sort === "asc") {
+      sortOptions = { price: 1 };
+    } else if (sort === "desc") {
+      sortOptions = { price: -1 };
+    }
+
+    try {
+      const products = await Product.find(query)
+        .sort(sortOptions)
+        .skip((pageNumber - 1) * limit)
+        .limit(limit);
+
+      const totalItems = await Product.countDocuments(query);
+      const totalPages = Math.ceil(totalItems / limit);
+
+      return res.status(200).json({
+        success: true,
+        products,
+        totalPages,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
+);

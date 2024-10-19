@@ -1,39 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "../../components/User/ProductCard";
-
-const products = [
-  {
-    name: "Product 1",
-    price: 10,
-    stock: 5,  // Replacing rating with stock
-    imageUrl: "https://m.media-amazon.com/images/I/71jG+e7roXL._AC_UY218_.jpg",
-  },
-  {
-    name: "Product 2",
-    price: 20,
-    stock: 3,  // Replacing rating with stock
-    imageUrl: "https://m.media-amazon.com/images/I/812yohjGZ2L._AC_UY218_.jpg",
-  },
-  {
-    name: "Product 3",
-    price: 30,
-    stock: 10,  // Replacing rating with stock
-    imageUrl: "https://m.media-amazon.com/images/I/71A68Sti-4L._AC_UY218_.jpg",
-  },
-  {
-    name: "Product 4",
-    price: 40,
-    stock: 0,  // Replacing rating with stock
-    imageUrl: "https://m.media-amazon.com/images/I/813BY8cbW8L._AC_UY218_.jpg",
-  },
-  {
-    name: "Product 5",
-    price: 50,
-    stock: 7,  // Replacing rating with stock
-    imageUrl: "https://m.media-amazon.com/images/I/7159GCFgGiL._AC_UY218_.jpg",
-  },
-];
-
+import { useCategoriesQuery, useSearchProductsQuery } from "../../redux/api/ProductApi";
+import toast from "react-hot-toast";
+import { CustomError } from "../../types/api-types";
 
 const Search = () => {
   const [search, setSearch] = useState("");
@@ -42,8 +11,56 @@ const Search = () => {
   const [category, setCategory] = useState("none");
   const [page, setPage] = useState(1);
 
+  const { 
+    data: categoriesResponse, 
+    isLoading: loadingCategories, 
+    isError: isCategoriesError, 
+    error: categoriesError 
+  } = useCategoriesQuery("");
+  
+  const { 
+    isLoading: productLoading, 
+    data: searchData, 
+    error: searchError,
+    isError: isSearchError
+  } = useSearchProductsQuery({
+    price: maxPrice,
+    page,
+    category,
+    sort,
+    search
+  });
+
+  useEffect(() => {
+    console.log("Search params changed:", { search, sort, maxPrice, category, page });
+  }, [search, sort, maxPrice, category, page]);
+
+  useEffect(() => {
+    if (categoriesResponse) {
+      console.log("Categories loaded:", categoriesResponse);
+    }
+  }, [categoriesResponse]);
+
+  useEffect(() => {
+    if (searchData) {
+      console.log("Search data loaded:", searchData);
+    }
+  }, [searchData]);
+
+  if (isCategoriesError) {
+    console.error("Categories error:", categoriesError);
+    const err = categoriesError as CustomError;
+    toast.error(err.data.message);
+  }
+
+  if (isSearchError) {
+    console.error("Search error:", searchError);
+    const err = searchError as CustomError;
+    toast.error(err.data.message);
+  }
+
   const isPrevPageAvailable = page > 1;
-  const isNextPageAvailable = page < 3;
+  const isNextPageAvailable = searchData ? page < searchData.totalPages : false;
 
   return (
     <div className="flex p-6 bg-gray-900 min-h-screen text-gray-100 font-sans">
@@ -54,7 +71,10 @@ const Search = () => {
             name="filter"
             className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             value={sort}
-            onChange={(e) => setSort(e.target.value)}
+            onChange={(e) => {
+              console.log("Sort changed:", e.target.value);
+              setSort(e.target.value);
+            }}
           >
             <option value="none">None</option>
             <option value="asc">Low to High (Price)</option>
@@ -66,13 +86,18 @@ const Search = () => {
           <select
             name="category"
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => {
+              console.log("Category changed:", e.target.value);
+              setCategory(e.target.value);
+            }}
             className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
-            <option value="none">None</option>
-            <option value="electronics">Electronics</option>
-            <option value="clothing">Clothing</option>
-            <option value="books">Books</option>
+            <option value="none">ALL</option>
+            {
+              !loadingCategories && categoriesResponse?.categories.map((i) =>
+                (<option value={i} key={i}>{i.toUpperCase()}</option>)
+              )
+            }
           </select>
         </div>
         <div className="mb-6">
@@ -82,7 +107,10 @@ const Search = () => {
             min={100}
             max={100000}
             value={maxPrice}
-            onChange={(e) => setMaxPrice(Number(e.target.value))}
+            onChange={(e) => {
+              console.log("Max price changed:", e.target.value);
+              setMaxPrice(Number(e.target.value));
+            }}
             className="w-full accent-purple-500"
           />
         </div>
@@ -93,26 +121,38 @@ const Search = () => {
           type="text"
           placeholder="Search by name..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            console.log("Search changed:", e.target.value);
+            setSearch(e.target.value);
+          }}
           className="w-full p-2 mb-6 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
-        <div className="grid grid-cols-3 gap-4">
-          {products.map((product, index) => (
-            <ProductCard
-              key={index}
-              name={product.name}
-              price={product.price}
-              stock={product.stock}  // Passing stock value
-              photo={product.imageUrl}
-              category="Electronics"
-               ProductId={`product-${index}`}
-            />
-          ))}
-        </div>
+        {productLoading ? (
+          <p>Loading products...</p>
+        ) : isSearchError ? (
+          <p>Error loading products. Please try again.</p>
+        ) : searchData && searchData.products ? (
+          <div className="grid grid-cols-3 gap-4">
+            {searchData.products.map((product) => (
+              <ProductCard
+                key={product._id}
+                name={product.name}
+                price={product.price}
+                stock={product.stock}
+                photo={product.photo}
+                category={product.category}
+                ProductId={product._id}
+              />
+            ))}
+          </div>
+        ) : (
+          <p>No products found.</p>
+        )}
 
         <article className="flex justify-center mt-12 space-x-5">
           <button
             onClick={() => {
+              console.log("Moving to previous page");
               setPage((prev) => prev - 1);
             }}
             disabled={!isPrevPageAvailable}
@@ -121,10 +161,11 @@ const Search = () => {
             Prev
           </button>
           <span className="flex items-center text-lg">
-            {page} of {3}
+            {page} of {searchData ? searchData.totalPages : 1}
           </span>
           <button
             onClick={() => {
+              console.log("Moving to next page");
               setPage((prev) => prev + 1);
             }}
             disabled={!isNextPageAvailable}

@@ -56,7 +56,7 @@ const App = () => {
     });
   }, []);
 
-  if (loading) {
+  if (loading) { 
     return <h1><Loader /></h1>
   }
 
