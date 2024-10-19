@@ -40,8 +40,8 @@ export interface BaseQuery {
   category?: string; // Optional: Filters documents by category
 
   price?: {
-    $gte: number; // Optional: Filters documents where price is greater than or equal to a specified value
-    $lte: number; // Optional: Filters documents where price is less than or equal to a specified value
+    $gte?: number; // Optional: Filters documents where price is greater than or equal to a specified value
+    $lte?: number; // Optional: Filters documents where price is less than or equal to a specified value
     $eq?: number; // Optional: Filters documents where price is exactly equal to a specified value
   };
 
