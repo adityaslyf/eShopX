@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import { useSelector } from "react-redux";
 import { UserReducerInitialState } from "../types/reducer-types";
 import { useNewProductMutation } from "../redux/api/ProductApi";
+import toast from "react-hot-toast";
 
 const NewProduct: React.FC = () => {
   const { user } = useSelector(
@@ -11,14 +12,21 @@ const NewProduct: React.FC = () => {
 
   const [newProduct, { isLoading, isError, isSuccess }] = useNewProductMutation();
 
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<{
+    name: string;
+    price: string;
+    stock: string;
+    category: string;
+    photo: File; // Ensure photo is always a File
+  }>({
     name: "",
     price: "",
     stock: "",
-    category: "", // Add category field
-    photo: null,  // Store the file directly
+    category: "",
+    photo: new File([], ""), // Initialize with an empty File
   });
-  
+
+
   const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -46,27 +54,42 @@ const NewProduct: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+
+    if (!user?._id) {
+      toast.error("User not authenticated");
+      return;
+    }
     
+    if (!formState.photo.size) {
+      toast.error("Please provide a photo");
+      return;
+    }
+
+
     // Create a FormData object to send to the API
     const formData = new FormData();
     formData.append("name", formState.name);
     formData.append("price", formState.price);
     formData.append("stock", formState.stock);
     formData.append("category", formState.category); // Add category
-    if (formState.photo) {
-      formData.append("photo", formState.photo); // Include the file
-    }
+    formData.append("photo", formState.photo); // Include the file
 
     try {
       await newProduct({ formData, id: user?._id }).unwrap(); // Use user ID if needed
       // Reset the form or provide feedback to the user
-      setFormState({ name: "", price: "", stock: "", category: "", photo: null });
+      setFormState({
+        name: "",
+        price: "",
+        stock: "",
+        category: "",
+        photo: new File([], ""), // Reset to an empty File
+      });
       setSelectedImage(null);
     } catch (error) {
       console.error("Failed to create product:", error);
     }
-  };
-
+  }
   return (
     <div className="flex">
       <Sidebar />
