@@ -38,3 +38,8 @@ export type searchProductsRequest={
   search: string;
 
 };
+
+export type NewProductRequest = {
+  id: string;
+ formData: FormData;
+};

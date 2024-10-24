@@ -11,16 +11,16 @@ const Search = () => {
   const [category, setCategory] = useState("none");
   const [page, setPage] = useState(1);
 
-  const { 
-    data: categoriesResponse, 
-    isLoading: loadingCategories, 
-    isError: isCategoriesError, 
-    error: categoriesError 
+  const {
+    data: categoriesResponse,
+    isLoading: loadingCategories,
+    isError: isCategoriesError,
+    error: categoriesError
   } = useCategoriesQuery("");
-  
-  const { 
-    isLoading: productLoading, 
-    data: searchData, 
+
+  const {
+    isLoading: productLoading,
+    data: searchData,
     error: searchError,
     isError: isSearchError
   } = useSearchProductsQuery({

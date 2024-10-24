@@ -1,23 +1,32 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
+import { useSelector } from "react-redux";
+import { UserReducerInitialState } from "../types/reducer-types";
+import { useNewProductMutation } from "../redux/api/ProductApi";
 
 const NewProduct: React.FC = () => {
+  const { user } = useSelector(
+    (state: { userReducer: UserReducerInitialState }) => state.userReducer
+  );
+
+  const [newProduct, { isLoading, isError, isSuccess }] = useNewProductMutation();
+
   const [formState, setFormState] = useState({
     name: "",
     price: "",
     stock: "",
-    photo: "",
+    category: "", // Add category field
+    photo: null,  // Store the file directly
   });
-  const [selectedImage, setSelectedImage] = useState<
-    string | ArrayBuffer | null
-  >(null);
+  
+  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormState({
-      ...formState,
+    setFormState((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,19 +35,36 @@ const NewProduct: React.FC = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result);
-        setFormState({
-          ...formState,
-          photo: file.name,
-        });
+        setFormState((prev) => ({
+          ...prev,
+          photo: file, // Store the actual file
+        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted:", formState);
-    // Add form submission logic here
+    
+    // Create a FormData object to send to the API
+    const formData = new FormData();
+    formData.append("name", formState.name);
+    formData.append("price", formState.price);
+    formData.append("stock", formState.stock);
+    formData.append("category", formState.category); // Add category
+    if (formState.photo) {
+      formData.append("photo", formState.photo); // Include the file
+    }
+
+    try {
+      await newProduct({ formData, id: user?._id }).unwrap(); // Use user ID if needed
+      // Reset the form or provide feedback to the user
+      setFormState({ name: "", price: "", stock: "", category: "", photo: null });
+      setSelectedImage(null);
+    } catch (error) {
+      console.error("Failed to create product:", error);
+    }
   };
 
   return (
@@ -51,9 +77,7 @@ const NewProduct: React.FC = () => {
         >
           <h2 className="text-2xl font-bold mb-6 text-center">NEW PRODUCT</h2>
           <div className="flex flex-col mb-4">
-            <label htmlFor="name" className="mb-2">
-              Name
-            </label>
+            <label htmlFor="name" className="mb-2">Name</label>
             <input
               required
               type="text"
@@ -65,9 +89,7 @@ const NewProduct: React.FC = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label htmlFor="price" className="mb-2">
-              Price
-            </label>
+            <label htmlFor="price" className="mb-2">Price</label>
             <input
               required
               type="text"
@@ -79,9 +101,7 @@ const NewProduct: React.FC = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label htmlFor="stock" className="mb-2">
-              Stock
-            </label>
+            <label htmlFor="stock" className="mb-2">Stock</label>
             <input
               required
               type="text"
@@ -93,9 +113,19 @@ const NewProduct: React.FC = () => {
             />
           </div>
           <div className="flex flex-col mb-4">
-            <label htmlFor="photo" className="mb-2">
-              Photo
-            </label>
+            <label htmlFor="category" className="mb-2">Category</label>
+            <input
+              required
+              type="text"
+              id="category"
+              name="category"
+              value={formState.category}
+              onChange={handleChange}
+              className="px-3 py-2 border rounded-md"
+            />
+          </div>
+          <div className="flex flex-col mb-4">
+            <label htmlFor="photo" className="mb-2">Photo</label>
             <input
               required
               type="file"
@@ -109,16 +139,19 @@ const NewProduct: React.FC = () => {
               <img
                 src={selectedImage as string}
                 alt="Selected"
-                className="mt-4  w-36 h-36 text-center rounded-full object-cover"
+                className="mt-4 w-36 h-36 text-center rounded-full object-cover"
               />
             )}
           </div>
           <button
             type="submit"
             className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            disabled={isLoading} // Disable button while loading
           >
-            Submit
+            {isLoading ? "Submitting..." : "Submit"}
           </button>
+          {isError && <p className="text-red-500">Error creating product!</p>}
+          {isSuccess && <p className="text-green-500">Product created successfully!</p>}
         </form>
       </div>
     </div>
