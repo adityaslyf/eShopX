@@ -16,14 +16,15 @@ export const userApi = createApi({
   }),
 });
 
-export const getUser  = async (id: string) => {
+export const getUser = async (id: string): Promise<UserResponse | undefined> => {
   try {
-    const {data}: {data: UserResponse} = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/api/v1/user/${id}`,
+    const { data }: { data: UserResponse } = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/user/${id}`
     );
     return data;
   } catch (error) {
     console.log(error);
+    return undefined;
   }
 };
 

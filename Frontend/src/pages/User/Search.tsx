@@ -63,26 +63,23 @@ const Search = () => {
   const isNextPageAvailable = searchData ? page < searchData.totalPages : false;
 
   return (
-    <div className="flex p-6 bg-gray-900 min-h-screen text-gray-100 font-sans">
-      <aside className="w-1/4 p-4 bg-gray-800 rounded-lg shadow-lg">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2 text-purple-300">Filter</h1>
+    <div className="flex flex-col md:flex-row p-3 md:p-6 bg-gray-900 min-h-screen text-gray-100 font-sans gap-4">
+      <aside className="w-full md:w-1/4 p-4 bg-gray-800 rounded-lg shadow-lg h-fit">
+        <div className="mb-4 md:mb-6">
+          <h1 className="text-xl md:text-2xl font-bold mb-2 text-purple-300">Filter</h1>
           <select
             name="filter"
             className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
             value={sort}
-            onChange={(e) => {
-              console.log("Sort changed:", e.target.value);
-              setSort(e.target.value);
-            }}
+            onChange={(e) => setSort(e.target.value)}
           >
             <option value="none">None</option>
             <option value="asc">Low to High (Price)</option>
             <option value="desc">High to Low (Price)</option>
           </select>
         </div>
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2 text-purple-300">Category</h1>
+        <div className="mb-4 md:mb-6">
+          <h1 className="text-xl md:text-2xl font-bold mb-2 text-purple-300">Category</h1>
           <select
             name="category"
             value={category}
@@ -100,8 +97,8 @@ const Search = () => {
             }
           </select>
         </div>
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2 text-purple-300">Max Price: ${maxPrice}</h1>
+        <div className="mb-4 md:mb-6">
+          <h1 className="text-xl md:text-2xl font-bold mb-2 text-purple-300">Max Price: ${maxPrice}</h1>
           <input
             type="range"
             min={100}
@@ -115,8 +112,8 @@ const Search = () => {
           />
         </div>
       </aside>
-      <main className="w-3/4 p-4 ml-6 bg-gray-800 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-4 text-purple-300">Products</h1>
+      <main className="w-full md:w-3/4 p-4 bg-gray-800 rounded-lg shadow-lg">
+        <h1 className="text-2xl md:text-3xl font-bold mb-4 text-purple-300">Products</h1>
         <input
           type="text"
           placeholder="Search by name..."
@@ -128,11 +125,11 @@ const Search = () => {
           className="w-full p-2 mb-6 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
         {productLoading ? (
-          <p>Loading products...</p>
+          <p className="text-center">Loading products...</p>
         ) : isSearchError ? (
-          <p>Error loading products. Please try again.</p>
+          <p className="text-center text-red-400">Error loading products. Please try again.</p>
         ) : searchData && searchData.products ? (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {searchData.products.map((product) => (
               <ProductCard
                 key={product._id}
@@ -146,30 +143,24 @@ const Search = () => {
             ))}
           </div>
         ) : (
-          <p>No products found.</p>
+          <p className="text-center">No products found.</p>
         )}
 
-        <article className="flex justify-center mt-12 space-x-5">
+        <article className="flex justify-center mt-8 md:mt-12 space-x-3 md:space-x-5">
           <button
-            onClick={() => {
-              console.log("Moving to previous page");
-              setPage((prev) => prev - 1);
-            }}
+            onClick={() => setPage((prev) => prev - 1)}
             disabled={!isPrevPageAvailable}
-            className="px-4 py-2 bg-purple-600 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-700 transition duration-300"
+            className="px-3 md:px-4 py-2 bg-purple-600 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-700 transition duration-300 text-sm md:text-base"
           >
             Prev
           </button>
-          <span className="flex items-center text-lg">
+          <span className="flex items-center text-base md:text-lg">
             {page} of {searchData ? searchData.totalPages : 1}
           </span>
           <button
-            onClick={() => {
-              console.log("Moving to next page");
-              setPage((prev) => prev + 1);
-            }}
+            onClick={() => setPage((prev) => prev + 1)}
             disabled={!isNextPageAvailable}
-            className="px-4 py-2 bg-purple-600 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-700 transition duration-300"
+            className="px-3 md:px-4 py-2 bg-purple-600 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-purple-700 transition duration-300 text-sm md:text-base"
           >
             Next
           </button>
