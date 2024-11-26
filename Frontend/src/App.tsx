@@ -47,22 +47,15 @@ const App = () => {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        try {
-          const userData = await getUser(user.uid);
-          if (userData?.success && userData.user) {
-            dispatch(userExists(userData.user));
-          } else {
-            dispatch(userDoesNotExist());
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-          dispatch(userDoesNotExist());
+        const userData = await getUser(user.uid);
+        if (userData) {
+          dispatch(userExists(userData));
         }
-      } else {
-        dispatch(userDoesNotExist());
-      }
+      } else dispatch(userDoesNotExist());
     });
   }, []);
+
+
 
   if (loading) { 
     return <h1><Loader /></h1>

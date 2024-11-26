@@ -7,11 +7,15 @@ import toast from 'react-hot-toast';
 import { useLoginMutation } from '../../redux/api/UserApi';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { MessageResponse } from '../../types/api-types';
+import { useDispatch } from 'react-redux';
+import { userExists } from '../../redux/reducer/UserReducer';
+import { getUser } from '../../redux/api/UserApi';
 
 const Login = () => {
   const [gender, setGender] = useState('');
   const [dob, setDob] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [login] = useLoginMutation();
 
   const loginHandler = async () => {
@@ -19,36 +23,43 @@ const Login = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
+  
       if (!user.email) {
         toast.error('Please use a valid email to login');
         return;
       }
-
+  
       const res = await login({
         email: user.email,
         name: user.displayName || '',
         photo: user.photoURL || '',
         gender,
         role: 'user',
-        dob: dob,
+        dob,
         _id: user.uid,
+        createdAt: new Date().toISOString(), // Add these fields
+        updatedAt: new Date().toISOString()
       });
-
-      if ("data" in res && res.data) {
-        toast.success(res.data.message);
-        console.log(res.data);
-        navigate('/admin');
+  
+  
+      console.log("Login API Response:", res);
+  
+      if ("data" in res) {
+        if (res.data?.success) {
+          toast.success(res.data.message);
+          const userData = await getUser(user.uid);
+          if (userData) {
+            dispatch(userExists(userData));
+            navigate('/');
+          }
+        }
+      } else {
+        const error = res.error as FetchBaseQueryError;
+        const message = (error.data as MessageResponse).message;
+        toast.error(message);
       }
-      else {
-        const error = res.error as FetchBaseQueryError
-        const message = error.data as MessageResponse;
-        toast.error(message.message);
-      }
-
-      console.log('User signed in:', user);
-    }
-    catch (error) {
+    } catch (error) {
+      console.error("Login error:", error);
       toast.error('Login failed');
     }
   };

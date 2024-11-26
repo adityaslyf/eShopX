@@ -12,10 +12,12 @@ export const userReducer = createSlice({
   initialState,
   reducers: {
     userExists: (state, action: PayloadAction<User>) => {
+      console.log("Setting user in Redux:", action.payload);
       state.user = action.payload;
       state.loading = false;
     },
     userDoesNotExist: (state) => {
+      console.log("Clearing user in Redux");
       state.user = null;
       state.loading = false;
     },

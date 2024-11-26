@@ -3,9 +3,11 @@ export interface User {
     name: string;
     email: string;
     photo: string;
-    role: string;
+    role: "admin" | "user";
     dob: string;
     gender: string;
+    createdAt: string;
+    updatedAt: string;
   }
 
   export interface Product {
