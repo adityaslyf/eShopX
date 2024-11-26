@@ -32,7 +32,7 @@ const Sidebar = () => {
         <div className="m-4">
           <FaCartPlus className="size-11" />
         </div>
-        <div className="flex flex-col m-8 space-y-10">
+        <div className="flex flex-col m-8 space-y-9">
           {/* first col*/}
           <div className="flex flex-col">
             <div className="font-light text-xl">DASHBOARD</div>
